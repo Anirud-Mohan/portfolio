@@ -24,7 +24,7 @@ const Hero = () => {
           className="mb-8"
         >
           <Image
-            src="/ani_animated.jpeg"
+            src="/ani.jpg"
             alt="Anirud Mohan"
             width={200}
             height={200}
