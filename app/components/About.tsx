@@ -1,82 +1,59 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import Image from 'next/image'
 
-const experienceData = [
-  {
-    position: "Junior Machine Learning Engineer",
-    company: "Thapovan Info Systems",
-    year: "Oct 2023 - Jun 2024",
-    skills: ["LLMs", "NLP", "Model Optimization", "Team Leadership"]
-  },
-  {
-    position: "Software Developer Intern",
-    company: "Azentio",
-    year: "Feb 2023 - Sept 2023",
-    skills: ["Predictive Modeling", "Data Visualization", "Cross-functional Collaboration"]
-  }
-]
-
-const Experience = () => {
+const About = () => {
   return (
-    <section className="py-20 bg-gray-900 bg-opacity-80 min-h-screen flex items-center justify-center">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="about" className="py-20 bg-gray-900 bg-opacity-80">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.h2
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="text-3xl font-extrabold text-white text-center mb-16"
+          className="text-3xl font-extrabold text-white text-center mb-8"
         >
-          Work Experience Tree
+          About Me
         </motion.h2>
-        <div className="relative">
-          {/* Tree trunk */}
+        <div className="flex flex-col md:flex-row items-center md:items-start gap-8">
           <motion.div
-            initial={{ height: 0 }}
-            animate={{ height: '100%' }}
-            transition={{ duration: 1 }}
-            className="absolute left-1/2 transform -translate-x-1/2 w-4 bg-green-700 rounded-full"
-            style={{ top: 0, bottom: 0 }}
-          />
-          
-          {/* Experience branches */}
-          <div className="space-y-32">
-            {experienceData.map((exp, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.2 }}
-                className={`flex ${index % 2 === 0 ? 'justify-start' : 'justify-end'}`}
-              >
-                <div className={`w-1/2 ${index % 2 === 0 ? 'pr-8 text-right' : 'pl-8 text-left'}`}>
-                  <div className="bg-gray-800 p-6 rounded-lg shadow-lg">
-                    <h3 className="text-xl font-semibold text-green-400 mb-2">{exp.position}</h3>
-                    <p className="text-white mb-2">{exp.company}</p>
-                    <p className="text-gray-400 mb-4">{exp.year}</p>
-                    <div className="flex flex-wrap justify-end gap-2">
-                      {exp.skills.map((skill, skillIndex) => (
-                        <motion.span
-                          key={skillIndex}
-                          initial={{ scale: 0 }}
-                          animate={{ scale: 1 }}
-                          transition={{ duration: 0.3, delay: 0.5 + skillIndex * 0.1 }}
-                          className="inline-block bg-green-600 text-white text-sm px-3 py-1 rounded-full"
-                        >
-                          {skill}
-                        </motion.span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+            initial={{ opacity: 0, scale: 0.5 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5 }}
+            className="flex-shrink-0"
+          >
+            <Image
+              src="/placeholder.svg?height=250&width=250"
+              alt="Anirud Mohan"
+              width={250}
+              height={250}
+              className="rounded-full border-4 border-green-400"
+            />
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="bg-gray-800 shadow-md rounded-lg p-6 flex-grow"
+          >
+            <p className="text-gray-300 mb-4">
+              I'm a passionate and aspiring machine learning engineer with expertise in modern GenAI technologies. I love creating
+              beautiful, responsive, and user-friendly chat-bots powered by Large Language Models that solve real-world problems.
+            </p>
+            <p className="text-gray-300 mb-4">
+              My skills include HTML, CSS, Machine Learning techniques such as XGBoost, AdaBoost, Linear Regression, Logistic Regression, SVM, Kernalization, 
+              LLMs, RAG, Finetuning and more. I'm always eager to learn new technologies and improve my craft.
+            </p>
+            <p className="text-gray-300">
+              When I'm not coding, you can find me exploring nature, reading tech blogs, or contributing to
+              open-source projects.
+            </p>
+          </motion.div>
         </div>
       </div>
     </section>
   )
 }
 
-export default Experience
+export default About
 

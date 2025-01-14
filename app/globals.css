@@ -9,3 +9,12 @@ html {
 body {
   @apply bg-gray-900 text-white;
 }
+
+.section-padding {
+  @apply py-20;
+}
+
+.container {
+  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+}
+

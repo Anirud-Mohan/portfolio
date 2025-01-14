@@ -8,19 +8,19 @@ const projects = [
     id: 1,
     title: 'SVM implementation from Scratch',
     description: 'Training an SVM to accurately predict the next word from newsgroup dataset corpus. Implementing 5-fold cross-validation to increase model accuracy while preventing overfitting. Performing data pre-processing and creating feature vectors using TF-IDF methodology from scratch.',
-    image: '/images/svm-project.jpg',
+    image: '/images/svm-project.jpeg',
   },
   {
     id: 2,
     title: 'Early Diagnosis of Alzheimer\'s Disease',
     description: 'Developing a reliable and accurate method for diagnosing Alzheimer\'s disease at an early stage using 3D MRI scans. The goal is to help clinicians make accurate diagnoses in early stages, improving patient outcomes through earlier intervention and treatment.',
-    image: '/images/alzheimers-project.jpg',
+    image: '/images/alzheimers-project.jpeg',
   },
   {
     id: 3,
     title: 'University Admit Eligibility Predictor',
     description: 'The goal of this project is to help students in their application process by collecting all their respective scores necessary for application and using this data we predict the students chances of getting into their dream university with the help of a linear regression model.',
-    image: '/images/university-predictor.jpg',
+    image: '/images/university-predictor.jpeg',
   },
 ]
 
@@ -38,14 +38,13 @@ const Projects = () => {
               transition={{ duration: 0.5, delay: index * 0.1 }}
               className="bg-gray-800 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition duration-300"
             >
-              {/*<Image
+              <Image
                 src={project.image}
                 alt={project.title}
                 width={400}
                 height={300}
                 className="w-full h-48 object-cover"
-              />*/}
-              
+              />
               <div className="p-6">
                 <h3 className="text-xl font-semibold text-white mb-2">{project.title}</h3>
                 <p className="text-gray-300">{project.description}</p>
