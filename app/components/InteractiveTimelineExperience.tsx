@@ -106,44 +106,46 @@ const InteractiveTimelineExperience = () => {
       </div>
 
       {/* Modal for additional details */}
-      <motion.div
-        initial={false}
-        animate={selectedExperience ? { opacity: 1, pointerEvents: 'auto' } : { opacity: 0, pointerEvents: 'none' }}
-        className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
-      >
+      {selectedExperience && (
         <motion.div
-          className="bg-gray-800 rounded-lg p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto"
-          initial={{ scale: 0.9, opacity: 0 }}
-          animate={selectedExperience ? { scale: 1, opacity: 1 } : { scale: 0.9, opacity: 0 }}
-          transition={{ type: 'spring', damping: 15 }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
+          onClick={() => setSelectedExperience(null)}
         >
-          {selectedExperience && (
-            <>
-              <div className="flex justify-between items-start mb-4">
-                <div>
-                  <h2 className="text-2xl font-bold text-green-400">{selectedExperience.company}</h2>
-                  <h3 className="text-xl font-semibold text-white">{selectedExperience.position}</h3>
-                  <p className="text-sm text-gray-400 mt-1">{selectedExperience.date}</p>
-                </div>
-                <button
-                  onClick={() => setSelectedExperience(null)}
-                  className="text-gray-400 hover:text-white transition-colors"
-                >
-                  <X className="w-6 h-6" />
-                </button>
+          <motion.div
+            className="bg-gray-800 rounded-lg p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.9, opacity: 0 }}
+            transition={{ type: 'spring', damping: 15 }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex justify-between items-start mb-4">
+              <div>
+                <h2 className="text-2xl font-bold text-green-400">{selectedExperience.company}</h2>
+                <h3 className="text-xl font-semibold text-white">{selectedExperience.position}</h3>
+                <p className="text-sm text-gray-400 mt-1">{selectedExperience.date}</p>
               </div>
-              <div className="mt-4">
-                <h4 className="text-lg font-semibold text-white mb-2">Key Achievements and Responsibilities:</h4>
-                <ul className="list-disc list-inside text-gray-300 space-y-2">
-                  {selectedExperience.details.map((detail, index) => (
-                    <li key={index}>{detail}</li>
-                  ))}
-                </ul>
-              </div>
-            </>
-          )}
+              <button
+                onClick={() => setSelectedExperience(null)}
+                className="text-gray-400 hover:text-white transition-colors"
+              >
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+            <div className="mt-4">
+              <h4 className="text-lg font-semibold text-white mb-2">Key Achievements and Responsibilities:</h4>
+              <ul className="list-disc list-inside text-gray-300 space-y-2">
+                {selectedExperience.details.map((detail, index) => (
+                  <li key={index}>{detail}</li>
+                ))}
+              </ul>
+            </div>
+          </motion.div>
         </motion.div>
-      </motion.div>
+      )}
     </div>
   )
 }

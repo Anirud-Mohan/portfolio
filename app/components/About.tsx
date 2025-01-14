@@ -23,7 +23,7 @@ const About = () => {
             className="flex-shrink-0"
           >
             <Image
-              src="/placeholder.svg?height=250&width=250"
+              src="/ani_animated.jpeg"
               alt="Anirud Mohan"
               width={250}
               height={250}
