@@ -33,7 +33,7 @@ const Contact = () => {
   }, [])
 
   return (
-    <section id="contact" className="min-h-screen py-20 bg-gray-900 bg-opacity-80 relative overflow-hidden">
+    <section id="contact" className="min-h-screen py-32 relative overflow-hidden">
       <Particles
         id="tsparticles"
         init={particlesInit}
@@ -54,7 +54,7 @@ const Contact = () => {
                 enable: true,
                 mode: "repulse",
               },
-              resize: { enable: true },
+              resize: true,
             },
             modes: {
               push: {
@@ -90,7 +90,7 @@ const Contact = () => {
             number: {
               density: {
                 enable: true,
-                area:  800,
+                area: 800,
               },
               value: 80,
             },
@@ -113,9 +113,9 @@ const Contact = () => {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="text-5xl font-extrabold text-center mb-12 text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-500"
+          className="text-5xl font-extrabold text-center mb-12 text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-500 pt-16"
         >
-          Get in Touch
+          Let's work Together!!
         </motion.h2>
         <motion.form
           initial={{ opacity: 0, y: 20 }}
