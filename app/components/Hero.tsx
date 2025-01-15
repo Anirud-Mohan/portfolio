@@ -15,20 +15,20 @@ const Hero = () => {
   const currentRole = useTypingEffect(roles, 50, 25, 2000)
 
   return (
-    <section id="hero" className="bg-opacity-80 min-h-screen flex flex-col items-center justify-center relative">
+    <section id="hero" className="bg-opacity-80 min-h-screen flex flex-col items-center justify-center relative py-20">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <motion.div
           initial={{ opacity: 0, scale: 0.5 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5 }}
-          className="mb-8"
+          className="mb-8 w-64 h-64 md:w-80 md:h-80 relative mx-auto"
         >
           <Image
             src="/ani.jpg"
             alt="Anirud Mohan"
-            width={200}
-            height={200}
-            className="rounded-full border-4 border-green-400 mx-auto"
+            layout="fill"
+            objectFit="cover"
+            className="rounded-full border-4 border-green-400"
           />
         </motion.div>
         <motion.h1

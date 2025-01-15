@@ -55,7 +55,7 @@ const childVariants = {
 
 const Projects = () => {
   return (
-    <section id="projects" className="py-20 bg-gray-900 bg-opacity-80">
+    <section id="projects" className="py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.h2
           initial={{ opacity: 0, y: -20 }}
@@ -63,7 +63,7 @@ const Projects = () => {
           transition={{ duration: 0.5 }}
           className="text-4xl font-extrabold text-white text-center mb-12"
         >
-          My Projects
+          Projects that I have worked on!
         </motion.h2>
         <motion.div
           variants={containerVariants}

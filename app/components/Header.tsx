@@ -28,6 +28,24 @@ const Header = () => {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const header = document.querySelector('header')
+      if (header) {
+        if (window.scrollY > 100) {
+          header.classList.add('bg-opacity-90')
+          header.classList.remove('bg-opacity-0')
+        } else {
+          header.classList.add('bg-opacity-0')
+          header.classList.remove('bg-opacity-90')
+        }
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId)
     if (element) {
@@ -37,7 +55,7 @@ const Header = () => {
   }
 
   return (
-    <header className="fixed w-full bg-gray-900 bg-opacity-90 shadow-sm z-10">
+    <header className="fixed w-full shadow-sm z-50 transition-all duration-300 bg-opacity-90">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-4 md:justify-start md:space-x-10">
           <div className="flex justify-start lg:w-0 lg:flex-1">

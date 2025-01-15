@@ -19,7 +19,7 @@ const educationData = [
 
 const Education = () => {
   return (
-    <section className="py-20 bg-gray-900 bg-opacity-80">
+    <section className="py-20">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.h2
           initial={{ opacity: 0, y: -20 }}

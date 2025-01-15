@@ -5,8 +5,8 @@ import InteractiveTimelineExperience from './InteractiveTimelineExperience'
 
 const Experience = () => {
   return (
-    <section id="experience" className="py-20 bg-gray-900 bg-opacity-80">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="experience" className="py-20 relative z-0">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <motion.h2
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}

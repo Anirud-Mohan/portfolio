@@ -17,7 +17,7 @@ const experiences: ExperienceEntry[] = [
     company: "Thapovan Info Systems",
     position: "Junior Machine Learning Engineer",
     date: "Oct 2023 - Jun 2024",
-    summary: "Led a team of 5 engineers in developing state-of-the-art ML models. Implemented and deployed large language models for various NLP tasks.",
+    summary: "Involed in a Researh and Devlopement team with a main goal to develop state-of-the-art ML models. Implemented and deployed large language models for various NLP tasks.",
     details: [
       "Spearheaded the development of cutting-edge machine learning models, resulting in a 30% improvement in prediction accuracy.",
       "Implemented and fine-tuned large language models for NLP tasks, enhancing chatbot performance by 40%.",
@@ -29,7 +29,7 @@ const experiences: ExperienceEntry[] = [
     company: "Azentio",
     position: "Software Developer Intern",
     date: "Feb 2023 - Sept 2023",
-    summary: "Developed predictive models for customer churn analysis. Created data visualization dashboards for executive decision-making.",
+    summary: "Tasked with the conversion of monolithic architecture into muti-server architecture and also did data extraction for a large scale project.",
     details: [
       "Designed and implemented predictive models for customer churn analysis, increasing customer retention by 15%.",
       "Created interactive data visualization dashboards using D3.js, providing executives with real-time insights.",
@@ -52,7 +52,7 @@ const InteractiveTimelineExperience = () => {
   }, [controls, inView])
 
   return (
-    <div className="relative min-h-[600px] overflow-hidden" ref={ref}>
+    <div className="relative min-h-[600px] overflow-hidden z-10" ref={ref}>
       {/* Background elements */}
       <div className="absolute inset-0 bg-gradient-to-b from-gray-900 to-gray-800 opacity-50"></div>
       <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCI+CjxyZWN0IHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgZmlsbD0iIzI3MjcyNyI+PC9yZWN0Pgo8Y2lyY2xlIGN4PSIzMCIgY3k9IjMwIiByPSIxIiBmaWxsPSIjMzk1NzZCIj48L2NpcmNsZT4KPC9zdmc+')] opacity-10"></div>
@@ -68,7 +68,7 @@ const InteractiveTimelineExperience = () => {
       ></motion.div>
 
       {/* Experience boxes container */}
-      <div className="flex flex-col items-center justify-center min-h-full py-20">
+      <div className="flex flex-col items-center justify-center min-h-full py-20 relative z-20 pointer-events-auto">
         {experiences.map((exp, index) => (
           <motion.div
             key={index}
@@ -87,7 +87,7 @@ const InteractiveTimelineExperience = () => {
 
             {/* Experience box */}
             <motion.div
-              className={`w-5/12 p-6 bg-gray-800 rounded-lg shadow-lg cursor-pointer ${
+              className={`w-5/12 p-6 bg-gray-800 rounded-lg shadow-lg cursor-pointer z-30 ${
                 index % 2 === 0 ? 'mr-[calc(50%+2rem)]' : 'ml-[calc(50%+2rem)]'
               }`}
               whileHover={{ scale: 1.05, boxShadow: "0 0 20px rgba(74, 222, 128, 0.4)" }}
