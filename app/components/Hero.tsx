@@ -24,7 +24,7 @@ const Hero = () => {
           className="mb-8 w-64 h-64 md:w-80 md:h-80 relative mx-auto"
         >
           <Image
-            src="/ani.jpg"
+            src="/ani-terphost.jpg"
             alt="Anirud Mohan"
             layout="fill"
             objectFit="cover"
