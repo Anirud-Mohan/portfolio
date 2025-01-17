@@ -2,19 +2,35 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --foreground: 255 255 255;
+}
+
 html {
   scroll-behavior: smooth;
 }
 
 body {
-  @apply bg-gray-900 text-white;
+  color: rgb(var(--foreground));
 }
 
-.section-padding {
-  @apply py-20;
+/* Optimize performance for the canvas background */
+canvas {
+  image-rendering: optimizeSpeed;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: optimize-contrast;
+  image-rendering: pixelated;
+  -ms-interpolation-mode: nearest-neighbor;
 }
 
-.container {
-  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+/* Ensure smooth scrolling and prevent layout shifts */
+.smooth-scroll {
+  @apply transition-all duration-300 ease-in-out;
+}
+
+/* Prevent background content from creating scrollbars */
+.overflow-x-hidden {
+  overflow-x: hidden;
 }
 
