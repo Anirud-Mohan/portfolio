@@ -115,7 +115,7 @@ const Contact = () => {
           transition={{ duration: 0.5 }}
           className="text-5xl font-extrabold text-center mb-12 text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-500 pt-16"
         >
-          Let's work Together!!
+          Drop a message, let's connect and work together!!
         </motion.h2>
         <motion.form
           initial={{ opacity: 0, y: 20 }}

@@ -10,7 +10,8 @@ const Hero = () => {
     'Machine Learning Engineer',
     'Data Analyst',
     'Data Scientist',
-    'Software Developer'
+    'Software Developer',
+    'Sports Analyst',
   ]
   const currentRole = useTypingEffect(roles, 50, 25, 2000)
 
@@ -45,7 +46,7 @@ const Hero = () => {
           transition={{ duration: 0.5, delay: 0.2 }}
           className="mt-4 text-xl sm:text-2xl text-gray-300"
         >
-          A passionate <span className="text-green-400 font-mono">{currentRole}</span>
+          A fervent <span className="text-green-400 font-mono">{currentRole}</span>
         </motion.p>
         <motion.p
           initial={{ opacity: 0, y: -20 }}
@@ -53,7 +54,7 @@ const Hero = () => {
           transition={{ duration: 0.5, delay: 0.4 }}
           className="mt-4 text-xl sm:text-2xl text-gray-300"
         >
-          creating smart, accurate and reliable AI applications.
+          Engineering smart, trustworthy, and effective applications with the power of Artificial Intelligence.
         </motion.p>
         <motion.div
           initial={{ opacity: 0, y: -20 }}
@@ -67,7 +68,7 @@ const Hero = () => {
             rel="noopener noreferrer"
             className="inline-block bg-green-600 text-white px-6 py-3 rounded-md text-lg font-medium hover:bg-green-700 transition duration-300"
           >
-            View My Resume
+            Take a look at my Resume!
           </Link>
         </motion.div>
       </div>

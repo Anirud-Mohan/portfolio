@@ -26,7 +26,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ title, description, image, te
       }}
       className="bg-gray-800 rounded-lg overflow-hidden shadow-lg transition-all duration-300 flex flex-col h-full"
     >
-      <div className="relative h-48">
+      <div className="relative h-48 w-full">
         <Image
           src={image}
           alt={title}

@@ -7,14 +7,11 @@ const Footer = () => {
             <p>&copy; 2023 Your Name. All rights reserved.</p>
           </div>
           <div className="flex space-x-4">
-            <a href="#" className="hover:text-gray-300 transition duration-300">
+            <a href="https://www.linkedin.com/in/anirud-mohan/" className="hover:text-gray-300 transition duration-300">
               LinkedIn
             </a>
-            <a href="#" className="hover:text-gray-300 transition duration-300">
+            <a href="https://github.com/Anirud-Mohan" className="hover:text-gray-300 transition duration-300">
               GitHub
-            </a>
-            <a href="#" className="hover:text-gray-300 transition duration-300">
-              Twitter
             </a>
           </div>
         </div>
