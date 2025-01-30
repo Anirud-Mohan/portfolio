@@ -43,7 +43,7 @@ const InteractiveTimelineExperience = () => {
   const [selectedExperience, setSelectedExperience] = useState<ExperienceEntry | null>(null)
   const controls = useAnimation()
   const ref = useRef(null)
-  const inView = useInView(ref)
+  const inView = useInView(ref, { amount: 0.3 })
 
   useEffect(() => {
     if (inView) {

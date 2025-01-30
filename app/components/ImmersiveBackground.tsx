@@ -247,4 +247,3 @@ const ImmersiveBackground = () => {
 }
 
 export default ImmersiveBackground
-

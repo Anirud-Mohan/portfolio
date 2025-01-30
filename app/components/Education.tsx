@@ -22,18 +22,18 @@ const educationData: EducationEntry[] = [
     institution: "University of Maryland, College Park",
     logo: "/umd-logo.jpeg",
     year: "2024 - present",
-    description: "Learning the intricacies and the core concepts of Machine Learning models",
+    description: "Learning the intricacies and the core concepts of Machine Learning techniques",
     gpa: "3.76/4.0",
     coursework: [
-      "Deep Learning",
-      "Natural Language Processing",
-      "Computer Vision",
-      "Reinforcement Learning"
+      "Principles of Machine Learning",
+      "Principles of Data Science",
+      "Probablity and Statistics",
+      "Algorithms and Data Structures for ML", 
+      "Model Optimization"
     ],
     activities: [
-      "Machine Learning Club",
-      "AI Ethics Committee",
-      "Data Science Hackathon Organizer"
+      "UMD Cricket Club",
+      "AI Ethics Committee"
     ]
   },
   {
@@ -47,12 +47,13 @@ const educationData: EducationEntry[] = [
       "Data Structures and Algorithms",
       "Database Management Systems",
       "Operating Systems",
-      "Software Engineering"
+      "Software Engineering",
+      "Artificial Intelligence"
     ],
     activities: [
-      "Coding Club President",
-      "IEEE Student Branch",
-      "National Service Scheme Volunteer"
+      "Cricket Team Captain",
+      "Technical Quiz Event Organizer",
+      "Rotaract Club Member"
     ]
   }
 ]
@@ -67,7 +68,7 @@ const Education = () => {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="text-3xl font-extrabold text-white text-center mb-12"
+          className="text-5xl font-extrabold text-center mb-12 text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-500"
         >
           Education
         </motion.h2>
