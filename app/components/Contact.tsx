@@ -36,7 +36,6 @@ const Contact = () => {
     <section id="contact" className="min-h-screen py-32 relative overflow-hidden">
       <Particles
         id="tsparticles"
-        init={particlesInit}
         options={{
           background: {
             color: {
@@ -54,7 +53,7 @@ const Contact = () => {
                 enable: true,
                 mode: "repulse",
               },
-              resize: true,
+              resize: {enable : true},
             },
             modes: {
               push: {
@@ -89,8 +88,7 @@ const Contact = () => {
             },
             number: {
               density: {
-                enable: true,
-                area: 800,
+                enable: true
               },
               value: 80,
             },
