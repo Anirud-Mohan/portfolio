@@ -29,7 +29,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ title, description, image, te
     >
       <div className="relative h-48 w-full">
         <Image
-          src={imagePath}
+          src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}${imagePath}`}
           alt={title}
           layout="fill"
           objectFit="cover"

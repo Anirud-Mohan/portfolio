@@ -7,6 +7,9 @@ const nextConfig = {
   images: {
     unoptimized: true, // Disables image optimization for static export
   },
+  env: {
+    NEXT_PUBLIC_BASE_PATH: isGithubPages ? '/portfolio' : '',
+  },
 };
 
 module.exports = nextConfig;
