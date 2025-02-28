@@ -14,6 +14,7 @@ interface ProjectCardProps {
 }
 
 const ProjectCard: React.FC<ProjectCardProps> = ({ title, description, image, technologies, projectUrl, index }) => {
+  const imagePath = `${process.env.basePath || ''}${image}`;
   return (
     <motion.div
       initial={{ opacity: 0, y: 50 }}
@@ -28,7 +29,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ title, description, image, te
     >
       <div className="relative h-48 w-full">
         <Image
-          src={image}
+          src={imagePath}
           alt={title}
           layout="fill"
           objectFit="cover"
