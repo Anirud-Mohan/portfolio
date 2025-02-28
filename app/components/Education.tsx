@@ -86,7 +86,7 @@ const Education = () => {
               <div className="p-6 flex items-start">
                 <div className="flex-shrink-0 mr-4">
                   <Image
-                    src={edu.logo || "/placeholder.svg"}
+                    src={edu.logo || `${process.env.basePath || ''}/placeholder.svg`}
                     alt={`${edu.institution} logo`}
                     width={80}
                     height={80}

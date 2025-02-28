@@ -23,7 +23,7 @@ const About = () => {
             className="flex-shrink-0"
           >
             <Image
-              src="/ani_animated.jpeg"
+              src={`${process.env.basePath || ''}/ani_animated.jpeg`}
               alt="Anirud Mohan"
               width={250}
               height={250}

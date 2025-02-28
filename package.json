@@ -3,10 +3,12 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "export": "next build && next export"
   },
   "dependencies": {
     "@tsparticles/react": "^3.0.0",
+    "export": "^0.1.337",
     "framer-motion": "^10.18.0",
     "lucide-react": "^0.471.1",
     "next": "^15.1.4",
