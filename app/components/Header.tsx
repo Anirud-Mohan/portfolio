@@ -10,7 +10,7 @@ const Header = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['hero', 'about', 'projects', 'education', 'experience', 'contact']
+      const sections = ['hero', 'about', 'education', 'experience', 'projects', 'contact']
       const currentSection = sections.find(section => {
         const element = document.getElementById(section)
         if (element) {
@@ -88,7 +88,7 @@ const Header = () => {
             </button>
           </div>
           <nav className="hidden md:flex space-x-10">
-            {['about', 'projects', 'education', 'experience', 'contact'].map((section) => (
+            {['about', 'education', 'experience', 'projects', 'contact'].map((section) => (
               <button
                 key={section}
                 onClick={() => scrollToSection(section)}
@@ -144,7 +144,7 @@ const Header = () => {
             </div>
             <div className="mt-6">
               <nav className="grid gap-y-8">
-                {['about', 'projects', 'education', 'experience', 'contact'].map((section) => (
+                {['about', 'education', 'experience', 'projects', 'contact'].map((section) => (
                   <button
                     key={section}
                     onClick={() => scrollToSection(section)}

@@ -1,162 +1,87 @@
-'use client'
+"use client"
 
-import { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { X } from 'lucide-react'
-import Image from 'next/image'
+import Image from "next/image"
+import { Card, CardContent } from "./ui/card"
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog"
 
-interface EducationEntry {
-  degree: string
-  institution: string
-  logo: string
-  year: string
-  description: string
-  gpa: string
-  coursework: string[]
-  activities: string[]
-}
-
-const educationData: EducationEntry[] = [
+const educationData = [
   {
-    degree: "Master of Science in Applied Machine Learning",
     institution: "University of Maryland, College Park",
+    degree: "Master of Science in Applied Machine Learning",
+    period: "2024 - present",
     logo: "/umd-logo.jpeg",
-    year: "2024 - present",
-    description: "Learning the intricacies and the core concepts of Machine Learning techniques",
-    gpa: "3.76/4.0",
-    coursework: [
-      "Principles of Machine Learning",
-      "Principles of Data Science",
-      "Probablity and Statistics",
-      "Algorithms and Data Structures for ML", 
-      "Model Optimization"
-    ],
-    activities: [
-      "UMD Cricket Club",
-      "AI Ethics Committee"
-    ]
+    details: {
+      courses: ["Advanced Machine Learning", "Deep Learning", "Natural Language Processing", "Computer Vision"],
+      achievements: ["Research Assistant in AI Lab", "4.0 GPA", "Published paper in ML conference"],
+    },
   },
   {
-    degree: "Bachelor of Engineering in Computer Science",
     institution: "Misrimal Navajee Munoth Jain Engineering College",
+    degree: "Bachelor of Engineering in Computer Science",
+    period: "2019 - 2023",
     logo: "/mnmjec_logo.png",
-    year: "2019 - 2023",
-    description: "Graduated with first class honors",
-    gpa: "8.82/10",
-    coursework: [
-      "Data Structures and Algorithms",
-      "Database Management Systems",
-      "Operating Systems",
-      "Software Engineering",
-      "Artificial Intelligence"
-    ],
-    activities: [
-      "Cricket Team Captain",
-      "Technical Quiz Event Organizer",
-      "Rotaract Club Member"
-    ]
-  }
+    details: {
+      courses: ["Data Structures", "Algorithms", "Database Management", "Software Engineering"],
+      achievements: ["Class Representative", "First Class with Distinction", "Technical Club Lead"],
+    },
+  },
 ]
 
-const Education = () => {
-  const [selectedEducation, setSelectedEducation] = useState<EducationEntry | null>(null)
-
+export default function EducationSection() {
   return (
-    <section id="education" className="py-20">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.h2
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="text-5xl font-extrabold text-center mb-12 text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-500"
-        >
-          Education
-        </motion.h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {educationData.map((edu, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.2 }}
-              className="bg-gray-800 rounded-lg shadow-lg overflow-hidden cursor-pointer"
-              whileHover={{ scale: 1.05, boxShadow: "0 0 20px rgba(74, 222, 128, 0.4)" }}
-              onClick={() => setSelectedEducation(edu)}
-            >
-              <div className="p-6 flex items-start">
-                <div className="flex-shrink-0 mr-4">
-                  <Image
-                    src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}${edu.logo || '/placeholder.svg'}`}
-                    alt={`${edu.institution} logo`}
-                    width={80}
-                    height={80}
-                    className="rounded-lg bg-white p-2"
-                  />
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-green-400 mb-2">{edu.institution}</h3>
-                  <p className="text-white text-lg mb-1">{edu.degree}</p>
-                  <p className="text-gray-400 text-sm">{edu.year}</p>
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </div>
+    <section id="education" className="min-h-screen flex flex-col items-center justify-center px-4 py-16">
+      <h2 className="text-5xl font-bold mb-16 text-[#66FFEE]">Education</h2>
 
-      <AnimatePresence>
-        {selectedEducation && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
-            onClick={() => setSelectedEducation(null)}
-          >
-            <motion.div
-              className="bg-gray-800 rounded-lg p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto"
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              transition={{ type: 'spring', damping: 15 }}
-              onClick={(e) => e.stopPropagation()}
-            >
-              <div className="flex justify-between items-start mb-4">
+      <div className="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 gap-8">
+        {educationData.map((edu, index) => (
+          <Dialog key={index}>
+            <DialogTrigger className="w-full">
+              <Card className="bg-slate-900/60 border-none text-white hover:transform hover:scale-105 transition-all cursor-pointer w-full">
+                <CardContent className="p-6 flex flex-col items-center">
+                  <div className="w-64 h-64 mb-6 bg-white rounded-lg overflow-hidden">
+                    <Image
+                      src={edu.logo || "/placeholder.svg"}
+                      alt={`${edu.institution} logo`}
+                      width={256}
+                      height={256}
+                      className="object-contain"
+                    />
+                  </div>
+                  <div className="text-center">
+                    <h3 className="text-green-500 text-2xl font-semibold mb-2">{edu.institution}</h3>
+                    <p className="text-xl mb-2">{edu.degree}</p>
+                    <p className="text-gray-400 text-lg">{edu.period}</p>
+                  </div>
+                </CardContent>
+              </Card>
+            </DialogTrigger>
+            <DialogContent className="bg-slate-900/95 text-white border-slate-800">
+              <DialogHeader>
+                <DialogTitle className="text-2xl text-green-500">{edu.institution}</DialogTitle>
+              </DialogHeader>
+              <div className="space-y-4 mt-4">
                 <div>
-                  <h2 className="text-2xl font-bold text-green-400">{selectedEducation.institution}</h2>
-                  <h3 className="text-xl font-semibold text-white">{selectedEducation.degree}</h3>
-                  <p className="text-sm text-gray-400 mt-1">{selectedEducation.year}</p>
+                  <h4 className="text-lg font-semibold mb-2">Key Courses</h4>
+                  <ul className="list-disc list-inside space-y-1">
+                    {edu.details.courses.map((course, i) => (
+                      <li key={i}>{course}</li>
+                    ))}
+                  </ul>
                 </div>
-                <button
-                  onClick={() => setSelectedEducation(null)}
-                  className="text-gray-400 hover:text-white transition-colors"
-                >
-                  <X className="w-6 h-6" />
-                </button>
+                <div>
+                  <h4 className="text-lg font-semibold mb-2">Achievements</h4>
+                  <ul className="list-disc list-inside space-y-1">
+                    {edu.details.achievements.map((achievement, i) => (
+                      <li key={i}>{achievement}</li>
+                    ))}
+                  </ul>
+                </div>
               </div>
-              <div className="mt-4">
-                <p className="text-gray-300 mb-4">{selectedEducation.description}</p>
-                <p className="text-white font-semibold mb-2">GPA: {selectedEducation.gpa}</p>
-                <h4 className="text-lg font-semibold text-white mb-2">Key Coursework:</h4>
-                <ul className="list-disc list-inside text-gray-300 space-y-1 mb-4">
-                  {selectedEducation.coursework.map((course, index) => (
-                    <li key={index}>{course}</li>
-                  ))}
-                </ul>
-                <h4 className="text-lg font-semibold text-white mb-2">Activities and Clubs:</h4>
-                <ul className="list-disc list-inside text-gray-300 space-y-1">
-                  {selectedEducation.activities.map((activity, index) => (
-                    <li key={index}>{activity}</li>
-                  ))}
-                </ul>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            </DialogContent>
+          </Dialog>
+        ))}
+      </div>
     </section>
   )
 }
-
-export default Education
 

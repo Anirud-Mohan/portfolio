@@ -4,6 +4,7 @@ import Projects from './components/Projects'
 import EducationSection from './components/Education'
 import Experience from './components/Experience'
 import Contact from './components/Contact'
+import CertificationsSection from "./components/CertificationSection"
 
 export default function Home() {
   return (
@@ -23,6 +24,7 @@ export default function Home() {
       <section id="projects">
         <Projects />
       </section>
+      <CertificationsSection />
       <section id="contact">
         <Contact />
       </section>
