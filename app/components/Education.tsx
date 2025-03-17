@@ -40,7 +40,7 @@ export default function EducationSection() {
                 <CardContent className="p-6 flex flex-col items-center">
                   <div className="w-64 h-64 mb-6 bg-white rounded-lg overflow-hidden">
                     <Image
-                      src={edu.logo || "/placeholder.svg"}
+                      src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}${edu.logo || '/placeholder.svg'}`}
                       alt={`${edu.institution} logo`}
                       width={256}
                       height={256}
