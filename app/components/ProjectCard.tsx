@@ -1,8 +1,9 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { motion, useScroll, useTransform } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRef } from 'react'
 
 interface ProjectCardProps {
   title: string
@@ -14,9 +15,23 @@ interface ProjectCardProps {
 }
 
 const ProjectCard: React.FC<ProjectCardProps> = ({ title, description, image, technologies, projectUrl, index }) => {
+  const ref = useRef<HTMLDivElement>(null)
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["0 1", "1.33 1"]
+  })
+  
+  const scaleProgress = useTransform(scrollYProgress, [0, 1], [0.8, 1])
+  const opacityProgress = useTransform(scrollYProgress, [0, 1], [0.6, 1])
+  
   const imagePath = `${process.env.basePath || ''}${image}`;
   return (
     <motion.div
+      ref={ref}
+      style={{
+        scale: scaleProgress,
+        opacity: opacityProgress,
+      }}
       initial={{ opacity: 0, y: 50 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3, delay: index * 0.1 }}
@@ -29,10 +44,10 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ title, description, image, te
     >
       <div className="relative h-48 w-full">
         <Image
-          src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}${imagePath}`}
+          src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}${image}`}
           alt={title}
-          layout="fill"
-          objectFit="cover"
+          fill
+          style={{ objectFit: 'cover' }}
           className="transition-transform duration-300 hover:scale-105"
         />
       </div>
