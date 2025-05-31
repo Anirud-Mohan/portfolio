@@ -3,7 +3,7 @@
 import type React from "react"
 
 import { useState, useRef, useEffect } from "react"
-import { motion, useAnimation, useInView } from "framer-motion"
+import { motion, useAnimation, useInView, useScroll, useTransform } from "framer-motion"
 import { Calendar, X } from "lucide-react"
 import { FaPython, FaJava, FaDocker, FaGitAlt, FaDatabase, FaCloud, FaCogs } from "react-icons/fa"
 import { SiTensorflow, SiPytorch, SiSpringboot, SiMongodb, SiD3Dotjs } from "react-icons/si"
@@ -29,10 +29,10 @@ const experiences: ExperienceEntry[] = [
     date: "Oct 2023 - Jun 2024",
     summary: "Developed and deployed state-of-the-art ML models for various NLP tasks.",
     details: [
-      "Improved prediction accuracy by 30% through development of cutting-edge machine learning models.",
-      "Enhanced chatbot performance by 40% using fine-tuned large language models for NLP tasks.",
-      "Reduced model inference time by 40%, significantly improving overall system efficiency.",
-      "Collaborated with cross-functional teams to integrate ML solutions into existing products.",
+      "Designed and deployed end-to-end LLM-powered chatbot systems using HuggingFace Transformers and Python.",
+      "Integrated Guardrails for LLMs by creating structured input/output validation pipelines and employing Retrieval-Augmented Generation (RAG), improving interaction accuracy by 30%.",
+      "Enhanced model performance with advanced Retrieval Augmented Generation techniques, achieving accuracy improvements up to 96%.",
+      "Collaborated with cross-functional teams using Agile methodologies to support the fine-tuning and deployment of AI models",
     ],
     skills: [
       { name: "Python", icon: FaPython },
@@ -49,9 +49,9 @@ const experiences: ExperienceEntry[] = [
     date: "Feb 2023 - Sept 2023",
     summary: "Converted monolithic architecture to multi-server and performed large-scale data extraction.",
     details: [
-      "Increased customer retention by 15% through implementation of predictive models for churn analysis.",
-      "Created interactive data visualization dashboards using D3.js for executive insights.",
-      "Integrated machine learning solutions into the company's financial software suite.",
+      "Refactored a monolithic architecture into a multi-server structure to improve system scalability and performance.",
+      "Developed secure and scalable APIs by segregating UI and API functionalities, focusing on exposing only the logistics API.",
+      "Implemented Python-based data extraction and transformation methods using Scrapy and BeautifulSoup4, identifying and rectifying three critical system performance bottlenecks.",
       "Actively participated in agile development processes, including sprint planning and daily stand-ups.",
     ],
     skills: [
@@ -67,9 +67,19 @@ const experiences: ExperienceEntry[] = [
 
 const InteractiveTimelineExperience = () => {
   const [selectedExperience, setSelectedExperience] = useState<ExperienceEntry | null>(null)
+  const [hoveredSkillsCard, setHoveredSkillsCard] = useState<number | null>(null)
   const controls = useAnimation()
   const ref = useRef(null)
+  const timelineRef = useRef<HTMLDivElement>(null)
   const inView = useInView(ref, { amount: 0.3 })
+  
+  // Enhanced scroll-based timeline growth
+  const { scrollYProgress } = useScroll({
+    target: timelineRef,
+    offset: ["start center", "end center"]
+  })
+  
+  const timelineHeight = useTransform(scrollYProgress, [0, 1], ["0%", "100%"])
 
   useEffect(() => {
     if (inView) {
@@ -83,25 +93,40 @@ const InteractiveTimelineExperience = () => {
       <div className="absolute inset-0 bg-gradient-to-b from-gray-900 to-gray-800 opacity-50"></div>
       <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCI+CjxyZWN0IHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgZmlsbD0iIzI3MjcyNyI+PC9yZWN0Pgo8Y2lyY2xlIGN4PSIzMCIgY3k9IjMwIiByPSIxIiBmaWxsPSIjMzk1NzZCIj48L2NpcmNsZT4KPC9zdmc+')] opacity-10"></div>
 
-      {/* Vertical timeline line */}
-      <motion.div
-        className="absolute left-1/2 top-10 bottom-10 w-0.5 bg-green-400"
-        initial={{ scaleY: 0 }}
-        animate={controls}
-        variants={{
-          visible: { scaleY: 1, transition: { duration: 1 } },
-        }}
-      ></motion.div>
+      {/* Timeline container with scroll reference */}
+      <div ref={timelineRef} className="relative">
+        {/* Background timeline line (full height) */}
+        <div className="absolute left-1/2 top-10 bottom-10 w-0.5 bg-gray-600 transform -translate-x-1/2"></div>
+        
+        {/* Progressive timeline line that grows with scroll */}
+        <motion.div
+          className="absolute left-1/2 top-10 w-0.5 bg-gradient-to-b from-green-400 to-green-500 transform -translate-x-1/2 origin-top"
+          style={{ height: timelineHeight }}
+        ></motion.div>
 
-      {/* Experience boxes container */}
-      <div className="flex flex-col items-center justify-center min-h-full py-20 relative z-20">
-        {experiences.map((exp, index) => (
-          <div key={index} className="flex w-full items-center mb-20">
-            {/* Timeline dot */}
-            <motion.div
-              className="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-green-500 rounded-full z-10"
-              whileHover={{ scale: 1.5 }}
-            ></motion.div>
+        {/* Experience boxes container */}
+        <div className="flex flex-col items-center justify-center min-h-full py-20 relative z-20">
+          {experiences.map((exp, index) => {
+            // Calculate when each dot should appear based on scroll progress
+            const dotThreshold = (index + 1) / experiences.length
+            const dotScale = useTransform(
+              scrollYProgress, 
+              [dotThreshold - 0.1, dotThreshold], 
+              [0, 1]
+            )
+            
+            return (
+              <div key={index} className="flex w-full items-center mb-20">
+                {/* Enhanced Timeline dot with clean scroll-based appearance */}
+                <motion.div
+                  className="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-green-500 rounded-full z-10 border-2 border-white shadow-lg"
+                  style={{ scale: dotScale }}
+                  whileHover={{ 
+                    scale: 1.5,
+                    boxShadow: "0 0 15px rgba(74, 222, 128, 0.6)"
+                  }}
+                  transition={{ duration: 0.2 }}
+                ></motion.div>
 
             {/* Left side content (Work Experience) */}
             <motion.div
@@ -123,7 +148,7 @@ const InteractiveTimelineExperience = () => {
               <p className="text-gray-300">{exp.summary}</p>
             </motion.div>
 
-            {/* Right side content (Skills) */}
+            {/* Right side content (Skills) with Simple Sequential Reveal */}
             <motion.div
               className="w-[45%] ml-auto p-6 bg-gray-800 rounded-lg shadow-lg z-30"
               initial={{ opacity: 0, x: 50 }}
@@ -132,11 +157,30 @@ const InteractiveTimelineExperience = () => {
                 visible: { opacity: 1, x: 0, transition: { duration: 0.5, delay: index * 0.4 + 0.2 } },
               }}
               whileHover={{ scale: 1.05, boxShadow: "0 0 20px rgba(74, 222, 128, 0.4)" }}
+              onMouseEnter={() => setHoveredSkillsCard(index)}
+              onMouseLeave={() => setHoveredSkillsCard(null)}
             >
               <h4 className="text-xl font-semibold text-green-400 mb-4">Skills & Technologies</h4>
               <div className="grid grid-cols-3 gap-4">
                 {exp.skills.map((skill, skillIndex) => (
-                  <motion.div key={skillIndex} className="flex flex-col items-center" whileHover={{ scale: 1.1 }}>
+                  <motion.div 
+                    key={skillIndex} 
+                    className="flex flex-col items-center"
+                    initial={{ opacity: 0, scale: 0.5 }}
+                    animate={{ 
+                      opacity: hoveredSkillsCard === index ? 1 : 0.7,
+                      scale: hoveredSkillsCard === index ? 1 : 0.9
+                    }}
+                    transition={{ 
+                      duration: 0.3,
+                      delay: hoveredSkillsCard === index ? skillIndex * 0.08 : 0,
+                      ease: "easeOut"
+                    }}
+                    whileHover={{ 
+                      scale: 1.1, 
+                      transition: { duration: 0.2 }
+                    }}
+                  >
                     <skill.icon className="w-8 h-8 text-green-400 mb-2" />
                     <span className="text-xs text-gray-300 text-center">{skill.name}</span>
                   </motion.div>
@@ -144,10 +188,10 @@ const InteractiveTimelineExperience = () => {
               </div>
             </motion.div>
           </div>
-        ))}
-      </div>
-
-      {/* Modal for additional details */}
+            )
+          })}
+        </div>
+      </div>      {/* Modal for additional details */}
       {selectedExperience && (
         <motion.div
           initial={{ opacity: 0 }}
@@ -157,7 +201,7 @@ const InteractiveTimelineExperience = () => {
           onClick={() => setSelectedExperience(null)}
         >
           <motion.div
-            className="bg-gray-800 rounded-lg p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+            className="bg-gray-800 rounded-lg p-8 max-w-4xl w-full max-h-[90vh] overflow-y-auto"
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.9, opacity: 0 }}
