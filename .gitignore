@@ -1,4 +1,4 @@
-echo "# Dependencies
+# Dependencies
 node_modules/
 .pnp
 .pnp.js
@@ -37,4 +37,4 @@ next-env.d.ts
 
 # IDE
 .vscode/
-.idea/" > .gitignore
+.idea/
