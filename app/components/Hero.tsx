@@ -24,13 +24,53 @@ const Hero = () => {
           transition={{ duration: 0.5 }}
           className="mb-8 w-64 h-64 md:w-80 md:h-80 relative mx-auto"
         >
-          <Image
-            src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}/ani.JPG`}
-            alt="Anirud Mohan"
-            layout="fill"
-            objectFit="cover"
-            className="rounded-full border-4 border-green-400"
+          {/* Outer glow - sun-like effect */}
+          <motion.div
+            className="absolute inset-0 rounded-full"
+            animate={{
+              boxShadow: [
+                "0 0 20px rgba(255, 215, 0, 0.3), 0 0 40px rgba(255, 215, 0, 0.2), 0 0 60px rgba(255, 215, 0, 0.1)",
+                "0 0 30px rgba(255, 215, 0, 0.4), 0 0 60px rgba(255, 215, 0, 0.3), 0 0 90px rgba(255, 215, 0, 0.2)",
+                "0 0 20px rgba(255, 215, 0, 0.3), 0 0 40px rgba(255, 215, 0, 0.2), 0 0 60px rgba(255, 215, 0, 0.1)"
+              ]
+            }}
+            transition={{
+              duration: 3,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
           />
+          
+          {/* Middle glow layer */}
+          <motion.div
+            className="absolute inset-2 rounded-full"
+            animate={{
+              boxShadow: [
+                "0 0 15px rgba(255, 255, 255, 0.2), inset 0 0 15px rgba(255, 215, 0, 0.1)",
+                "0 0 25px rgba(255, 255, 255, 0.3), inset 0 0 25px rgba(255, 215, 0, 0.2)",
+                "0 0 15px rgba(255, 255, 255, 0.2), inset 0 0 15px rgba(255, 215, 0, 0.1)"
+              ]
+            }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          />
+          
+          {/* Image container with subtle border */}
+          <div className="absolute inset-3 rounded-full overflow-hidden border-2 border-white/20 bg-gradient-to-br from-white/10 to-transparent">
+            <Image
+              src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}/ani_1.png`}
+              alt="Anirud Mohan"
+              fill
+              style={{ 
+                objectFit: 'contain', 
+                objectPosition: 'center center'
+              }}
+              className=""
+            />
+          </div>
         </motion.div>
         <motion.h1
           initial={{ opacity: 0, y: -20 }}

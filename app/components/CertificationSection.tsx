@@ -159,7 +159,7 @@ const CertificationCard = ({ certification }: { certification: Certification }) 
               </div>
               <Button
                 className="mt-6 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white text-xl py-6 w-full shadow-lg"
-                onClick={() => window.open(certification.credentialUrl, "_blank")}
+                onClick={() => window.open(`${process.env.NEXT_PUBLIC_BASE_PATH || ''}${certification.credentialUrl}`, "_blank")}
               >
                 Verify Credential <ExternalLink className="ml-2 w-5 h-5" />
               </Button>
