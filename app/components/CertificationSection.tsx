@@ -81,94 +81,119 @@ const CertificationCard = ({ certification }: { certification: Certification }) 
   const Icon = certification.icon
 
   return (
-    <Card className="bg-slate-900/60 border-none text-white hover:transform hover:scale-105 transition-all cursor-pointer w-[360px] h-[480px] flex-shrink-0 overflow-hidden relative">
-      {/* Decorative corner ribbon */}
-      <div className={`absolute top-0 right-0 w-32 h-32 overflow-hidden`}>
-        <div
-          className={`absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 rotate-45 w-40 h-10 bg-gradient-to-r ${certification.color}`}
-        ></div>
-      </div>
+    <Card className="bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700/50 text-white hover:transform hover:scale-[1.02] hover:shadow-2xl hover:shadow-green-500/20 transition-all duration-300 cursor-pointer w-[380px] h-[280px] flex-shrink-0 overflow-hidden relative group">
+      {/* Premium green accent line */}
+      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-green-400 via-green-500 to-green-400"></div>
+      
+      {/* Subtle corner accent */}
+      <div className="absolute top-4 right-4 w-8 h-8 border-t-2 border-r-2 border-green-400/30"></div>
 
-      {/* Card content */}
-      <CardContent className="p-8 flex flex-col justify-between h-full">
-        <div>
-          {/* Certificate header with logo */}
-          <div className="flex items-center mb-6">
-            <div className="mr-4 bg-white rounded-full p-2 w-16 h-16 flex items-center justify-center">
+      <CardContent className="p-6 flex flex-col h-full relative">
+        {/* Header section */}
+        <div className="flex items-start justify-between mb-4">
+          <div className="flex items-center">
+            <div className="mr-3 bg-white/95 rounded-lg p-2 w-12 h-12 flex items-center justify-center shadow-md">
               <Image
                 src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}${certification.logo ||'/placeholder.svg'}`}
                 alt={`${certification.issuer} logo`}
-                width={80}
-                height={80}
+                width={32}
+                height={32}
                 className="object-contain"
               />
             </div>
-            <h3 className="text-green-500 text-2xl font-semibold">{certification.title}</h3>
+            <div>
+              <p className="text-green-400 text-sm font-medium uppercase tracking-wide">Certificate</p>
+              <p className="text-slate-300 text-xs">{certification.date}</p>
+            </div>
           </div>
+          <Icon className="w-6 h-6 text-green-400/60" />
+        </div>
 
-          {/* Certificate icon */}
-          <div className="flex justify-center my-4">
-            <Icon className="w-20 h-20 text-green-400 opacity-20" />
-          </div>
-
-          {/* Certificate details */}
-          <div className="bg-slate-800/50 rounded-lg p-4 mb-4">
-            <p className="text-gray-300 text-lg mb-2 flex items-center">
-              <CheckCircle className="w-5 h-5 mr-2 text-green-500" />
-              Issued by: {certification.issuer}
-            </p>
-            <p className="text-gray-400 text-lg flex items-center">
-              <CheckCircle className="w-5 h-5 mr-2 text-green-500" />
-              Date: {certification.date}
-            </p>
+        {/* Title section */}
+        <div className="flex-1 mb-4">
+          <h3 className="text-white text-lg font-semibold leading-tight mb-2 group-hover:text-green-50 transition-colors">
+            {certification.title}
+          </h3>
+          <div className="flex items-center">
+            <div className="w-2 h-2 bg-green-400 rounded-full mr-2"></div>
+            <p className="text-slate-300 text-sm font-medium">{certification.issuer}</p>
           </div>
         </div>
 
-        {/* Certificate actions */}
-        <Dialog>
-          <DialogTrigger asChild>
-            <Button className="w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white text-xl py-4 shadow-lg">
-              View Certificate <ExternalLink className="ml-2 w-5 h-5" />
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="bg-slate-800 text-white border border-green-500">
-            <DialogHeader>
-              <DialogTitle className="text-2xl text-green-400 flex items-center">
-                <Award className="mr-2 text-green-500" /> {certification.title}
-              </DialogTitle>
-            </DialogHeader>
-            <div className="mt-6 space-y-4">
-              <div className="flex items-center justify-center bg-slate-900/60 p-6 rounded-lg">
-                <div className="bg-white rounded-full p-4 w-24 h-24 flex items-center justify-center">
-                  <Image
-                    src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}${certification.logo ||'/placeholder.svg'}`}
-                    alt={`${certification.issuer} logo`}
-                    width={80}
-                    height={80}
-                    className="object-contain"
-                  />
-                </div>
-              </div>
-              <div className="bg-slate-900/60 p-4 rounded-lg">
-                <p className="text-lg mb-2">
-                  Issued by: <span className="text-green-400">{certification.issuer}</span>
-                </p>
-                <p className="text-lg">
-                  Issue Date: <span className="text-green-400">{certification.date}</span>
-                </p>
-              </div>
-              <Button
-                className="mt-6 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white text-xl py-6 w-full shadow-lg"
-                onClick={() => window.open(`${process.env.NEXT_PUBLIC_BASE_PATH || ''}${certification.credentialUrl}`, "_blank")}
+        {/* Professional badge/verification */}
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-1">
+            <CheckCircle className="w-4 h-4 text-emerald-400" />
+            <span className="text-emerald-400 text-xs font-medium">Verified</span>
+          </div>
+          
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button 
+                size="sm"
+                className="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white text-sm font-semibold px-4 py-2 rounded-md shadow-md hover:shadow-lg transition-all duration-200"
               >
-                Verify Credential <ExternalLink className="ml-2 w-5 h-5" />
+                View Details
+                <ExternalLink className="ml-1 w-3 h-3" />
               </Button>
-            </div>
-          </DialogContent>
-        </Dialog>
+            </DialogTrigger>
+            <DialogContent className="bg-gradient-to-br from-slate-800 to-slate-900 text-white border border-slate-700/50 max-w-md">
+              <DialogHeader>
+                <DialogTitle className="text-xl text-green-400 flex items-center">
+                  <Award className="mr-2 text-green-500" /> Certificate Details
+                </DialogTitle>
+              </DialogHeader>
+              <div className="mt-6 space-y-4">
+                {/* Enhanced modal header */}
+                <div className="flex items-center justify-center bg-slate-900/60 p-6 rounded-lg border border-slate-700/30">
+                  <div className="bg-white rounded-lg p-3 w-20 h-20 flex items-center justify-center shadow-lg">
+                    <Image
+                      src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}${certification.logo ||'/placeholder.svg'}`}
+                      alt={`${certification.issuer} logo`}
+                      width={60}
+                      height={60}
+                      className="object-contain"
+                    />
+                  </div>
+                </div>
+                
+                {/* Certificate information */}
+                <div className="bg-slate-900/60 p-4 rounded-lg border border-slate-700/30 space-y-3">
+                  <h4 className="text-lg font-semibold text-white">{certification.title}</h4>
+                  <div className="space-y-2">
+                    <div className="flex items-center">
+                      <div className="w-2 h-2 bg-green-400 rounded-full mr-3"></div>
+                      <span className="text-slate-300">Issued by: </span>
+                      <span className="text-green-400 font-medium ml-1">{certification.issuer}</span>
+                    </div>
+                    <div className="flex items-center">
+                      <div className="w-2 h-2 bg-green-400 rounded-full mr-3"></div>
+                      <span className="text-slate-300">Issue Date: </span>
+                      <span className="text-green-400 font-medium ml-1">{certification.date}</span>
+                    </div>
+                    <div className="flex items-center">
+                      <CheckCircle className="w-4 h-4 text-emerald-400 mr-2" />
+                      <span className="text-emerald-400 text-sm font-medium">Verified Credential</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <Button
+                  className="mt-6 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-semibold py-3 w-full shadow-lg hover:shadow-xl transition-all duration-200"
+                  onClick={() => window.open(`${process.env.NEXT_PUBLIC_BASE_PATH || ''}${certification.credentialUrl}`, "_blank")}
+                >
+                  <ExternalLink className="mr-2 w-4 h-4" />
+                  Open Certificate
+                </Button>
+              </div>
+            </DialogContent>
+          </Dialog>
+        </div>
 
-        {/* Decorative elements */}
-        <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-green-500 to-transparent opacity-50"></div>
+        {/* Subtle background pattern */}
+        <div className="absolute bottom-0 right-0 w-20 h-20 opacity-5">
+          <Icon className="w-full h-full text-green-400" />
+        </div>
       </CardContent>
     </Card>
   )
@@ -189,11 +214,17 @@ export default function CertificationsSection() {
   })
 
   return (
-    <section id="certifications" className="min-h-screen flex flex-col items-center justify-center px-4 py-16">
-      <h2 className="text-5xl font-bold mb-16 text-[#66FFEE]">Certifications</h2>
+    <section id="certifications" className="min-h-screen flex flex-col items-center justify-center px-4 py-16 relative bg-transparent">
+      <div className="text-center mb-16">
+        <h2 className="text-5xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-500">
+          Professional Certifications
+        </h2>
+        <div className="w-24 h-1 bg-gradient-to-r from-green-400 to-blue-500 mx-auto rounded-full"></div>
+        <p className="text-slate-400 mt-4 text-lg">Validated expertise and continuous learning</p>
+      </div>
 
       <div className="w-full max-w-7xl relative overflow-hidden">
-        <div ref={containerRef} className="flex space-x-8" style={{ width: "fit-content" }}>
+        <div ref={containerRef} className="flex space-x-6" style={{ width: "fit-content" }}>
           {[...certifications, ...certifications].map((cert, index) => (
             <CertificationCard key={index} certification={cert} />
           ))}
