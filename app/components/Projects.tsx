@@ -6,6 +6,30 @@ import ProjectCard from './ProjectCard'
 const projects = [
   {
     id: 1,
+    title: 'AI Powered Code Reviewer',
+    description: 'Fine-tuned Microsoft CodeReviewer model on code refinement tasks and integrated it into GitHub Actions. Model metrics were logged on ClearML and the model was containerized and deployed on HuggingFace Spaces.',
+    image: '/images/AI_code_reviewer.png',
+    technologies: ['Python', 'Transformers', 'GitHub Actions', 'ClearML', 'HuggingFace', 'Docker'],
+    projectUrl: 'https://github.com/Anirud-Mohan'
+  },
+  {
+    id: 2,
+    title: 'Optimization for Finance Forecasting',
+    description: 'Solved a convex optimization problem using mathematical solvers to predict future financial trends with directional accuracy. Introduced wrong trade penalty terms often overlooked in financial market prediction.',
+    image: '/images/fin_trade.png',
+    technologies: ['Python', 'CVX', 'NumPy', 'Pandas', 'Mathematical Optimization', 'Finance'],
+    projectUrl: 'https://github.com/Anirud-Mohan'
+  },
+  {
+    id: 3,
+    title: 'Simulation of Information Spread',
+    description: 'Implemented custom Kruskal\'s algorithm to visualize information spread on Twitter dataset with 80k+ nodes. Used Graphistry for interactive visualization of graph-based information propagation.',
+    image: '/images/graph_network.png',
+    technologies: ['Python', 'Graph Algorithms', 'Graphistry', 'Network Analysis', 'Data Visualization'],
+    projectUrl: 'https://github.com/Anirud-Mohan'
+  },
+    {
+    id: 4,
     title: 'SVM implementation from Scratch',
     description: 'Training an SVM to accurately predict the next word from newsgroup dataset corpus. Implementing 5-fold cross-validation to increase model accuracy while preventing overfitting.',
     image: '/images/svm-project.jpeg',
@@ -13,7 +37,7 @@ const projects = [
     projectUrl: 'https://github.com/Anirud-Mohan/svm-implementation-from-scratch'
   },
   {
-    id: 2,
+    id: 5,
     title: 'Early Diagnosis of Alzheimer\'s Disease',
     description: 'Developing a reliable and accurate method for diagnosing Alzheimer\'s disease at an early stage using 3D MRI scans. Improving patient outcomes through earlier intervention and treatment.',
     image: '/images/alzheimers-project.jpeg',
@@ -21,7 +45,7 @@ const projects = [
     projectUrl: 'https://github.com/Anirud-Mohan/AlzheimersDetection'
   },
   {
-    id: 3,
+    id: 6,
     title: 'University Admit Eligibility Predictor',
     description: 'Predicting students\' chances of admission to their dream university using a linear regression model. Collecting and analyzing various scores necessary for the application process.',
     image: '/images/university-predictor.jpeg',
