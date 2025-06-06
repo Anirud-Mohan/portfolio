@@ -199,7 +199,7 @@ const Contact = () => {
             className="space-y-8"
           >
             <div>
-              <h3 className="text-2xl font-bold text-green-400 mb-6">Get in touch</h3>
+              <h3 className="text-2xl font-bold text-green-400 mb-6">Say Hello..</h3>
               <p className="text-gray-300 text-lg leading-relaxed">
                 I'm always excited to discuss new opportunities, collaborations, or interesting projects. 
                 Let's connect and create something amazing together!
@@ -212,27 +212,27 @@ const Contact = () => {
                 className="flex items-center space-x-4 text-gray-300"
               >
                 <FaEnvelope className="text-green-400 text-xl" />
-                <span>anirudmohan@example.com</span>
+                <span>anirudmohan2002@gmail.com</span>
               </motion.div>
               <motion.div 
                 whileHover={{ x: 10 }}
                 className="flex items-center space-x-4 text-gray-300"
               >
                 <FaPhone className="text-green-400 text-xl" />
-                <span>+1 (555) 123-4567</span>
+                <span>+1 (703) 705-8375</span>
               </motion.div>
               <motion.div 
                 whileHover={{ x: 10 }}
                 className="flex items-center space-x-4 text-gray-300"
               >
                 <FaMapMarkerAlt className="text-green-400 text-xl" />
-                <span>Your City, Your State</span>
+                <span>College Park, Maryland</span>
               </motion.div>
             </div>
 
             <div className="flex space-x-6 pt-6">
               <motion.a
-                href="https://linkedin.com/in/yourusername"
+                href="https://www.linkedin.com/in/anirud-mohan/"
                 target="_blank"
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.2, color: "#0077b5" }}
@@ -241,22 +241,13 @@ const Contact = () => {
                 <FaLinkedin size={32} />
               </motion.a>
               <motion.a
-                href="https://github.com/yourusername"
+                href="https://github.com/Anirud-Mohan"
                 target="_blank"
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.2, color: "#333" }}
                 className="text-gray-400 hover:text-gray-600 transition-colors duration-300"
               >
                 <FaGithub size={32} />
-              </motion.a>
-              <motion.a
-                href="https://twitter.com/yourusername"
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ scale: 1.2, color: "#1da1f2" }}
-                className="text-gray-400 hover:text-blue-400 transition-colors duration-300"
-              >
-                <FaTwitter size={32} />
               </motion.a>
             </div>
           </motion.div>
