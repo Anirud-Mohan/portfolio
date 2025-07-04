@@ -22,19 +22,20 @@ const Hero = () => {
           initial={{ opacity: 0, scale: 0.5 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5 }}
-          className="mb-8 w-64 h-64 md:w-80 md:h-80 relative mx-auto flex-shrink-0"
+          className="mb-8 relative mx-auto flex-shrink-0"
+          style={{ width: '20rem', height: '20rem', maxWidth: '100vw' }}
         >
-          {/* Simple professional image container */}
-          <div className="w-full h-full rounded-full overflow-hidden border-4 border-slate-700 shadow-lg mx-auto">
+          <div className="w-full h-full rounded-full overflow-hidden border-4 border-slate-700 shadow-lg relative">
             <Image
               src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}/ani_new.png`}
               alt="Anirud Mohan"
               fill
-              style={{ 
-                objectFit: 'cover', 
-                objectPosition: 'center center'
+              style={{
+                objectFit: 'cover',
+                objectPosition: 'center center',
               }}
               className="transition-transform duration-300 hover:scale-105"
+              sizes="(max-width: 640px) 16rem, 20rem"
             />
           </div>
         </motion.div>
