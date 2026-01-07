@@ -24,6 +24,26 @@ interface ExperienceEntry {
 
 const experiences: ExperienceEntry[] = [
   {
+    company: "CarinaAI",
+    position: "Data Science Intern",
+    date: "Oct 2025 - Dec 2025",
+    summary: "Engineered automated RAG pipeline and optimized ML deployment for healthcare AI systems.",
+    details: [
+      "Engineered an automated Chart Review RAG pipeline for the DeIdentifier product, boosting system accuracy from 69% to 82% through advanced post-processing and output flow validation.",
+      "Optimized retrieval performance by benchmarking diverse embedding models, implementing query transformation, and refining reranking strategies to enhance context precision.",
+      "Orchestrated the deployment cycle using the vLLM framework and KV caching to minimize memory footprint, while securing source code via Cythonization for client-side distribution.",
+      "Diagnosed and resolved a critical \"Yes/No\" evaluation bias by validating model outputs against physician-curated ground truth, correcting the evaluation schema and improving reliability.",
+    ],
+    skills: [
+      { name: "Python", icon: FaPython },
+      { name: "PyTorch", icon: SiPytorch },
+      { name: "TensorFlow", icon: SiTensorflow },
+      { name: "Docker", icon: FaDocker },
+      { name: "MLOps", icon: FaCogs },
+      { name: "Git", icon: FaGitAlt },
+    ],
+  },
+  {
     company: "Thapovan Info Systems",
     position: "Junior Machine Learning Engineer",
     date: "Oct 2023 - Jun 2024",

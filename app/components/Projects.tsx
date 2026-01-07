@@ -6,6 +6,14 @@ import ProjectCard from './ProjectCard'
 const projects = [
   {
     id: 1,
+    title: 'Pathology-Controllable Diffusion for Brain MRI',
+    description: 'Developing a diffusion-based model for generating healthy counterfactual brain MRI scans while preserving the patient\'s anatomy. Enables further analysis of pathological features by comparing real and generated scans.',
+    image: '/images/brain-mri-diffusion.png',
+    technologies: ['Python', 'PyTorch', 'Diffusion Models', 'Medical Imaging', 'Deep Learning'],
+    projectUrl: 'https://github.com/Anirud-Mohan/Seg_diffusion'
+  },
+  {
+    id: 2,
     title: 'AI Powered Code Reviewer',
     description: 'Fine-tuned Microsoft CodeReviewer model on code refinement tasks and integrated it into GitHub Actions. Model metrics were logged on ClearML and the model was containerized and deployed on HuggingFace Spaces.',
     image: '/images/AI_code_reviewer.png',
@@ -13,7 +21,7 @@ const projects = [
     projectUrl: 'https://github.com/Anirud-Mohan'
   },
   {
-    id: 2,
+    id: 3,
     title: 'Optimization for Finance Forecasting',
     description: 'Solved a convex optimization problem using mathematical solvers to predict future financial trends with directional accuracy. Introduced wrong trade penalty terms often overlooked in financial market prediction.',
     image: '/images/fin_trade.png',
@@ -21,15 +29,15 @@ const projects = [
     projectUrl: 'https://github.com/Anirud-Mohan'
   },
   {
-    id: 3,
+    id: 4,
     title: 'Simulation of Information Spread',
     description: 'Implemented custom Kruskal\'s algorithm to visualize information spread on Twitter dataset with 80k+ nodes. Used Graphistry for interactive visualization of graph-based information propagation.',
     image: '/images/graph_network.png',
     technologies: ['Python', 'Graph Algorithms', 'Graphistry', 'Network Analysis', 'Data Visualization'],
-    projectUrl: 'https://github.com/Anirud-Mohan'
+    projectUrl: 'https://github.com/Anirud-Mohan/Information-Spread'
   },
     {
-    id: 4,
+    id: 5,
     title: 'SVM implementation from Scratch',
     description: 'Training an SVM to accurately predict the next word from newsgroup dataset corpus. Implementing 5-fold cross-validation to increase model accuracy while preventing overfitting.',
     image: '/images/svm-project.jpeg',
@@ -37,7 +45,7 @@ const projects = [
     projectUrl: 'https://github.com/Anirud-Mohan/svm-implementation-from-scratch'
   },
   {
-    id: 5,
+    id: 6,
     title: 'Early Diagnosis of Alzheimer\'s Disease',
     description: 'Developing a reliable and accurate method for diagnosing Alzheimer\'s disease at an early stage using 3D MRI scans. Improving patient outcomes through earlier intervention and treatment.',
     image: '/images/alzheimers-project.jpeg',
@@ -45,7 +53,7 @@ const projects = [
     projectUrl: 'https://github.com/Anirud-Mohan/AlzheimersDetection'
   },
   {
-    id: 6,
+    id: 7,
     title: 'University Admit Eligibility Predictor',
     description: 'Predicting students\' chances of admission to their dream university using a linear regression model. Collecting and analyzing various scores necessary for the application process.',
     image: '/images/university-predictor.jpeg',
