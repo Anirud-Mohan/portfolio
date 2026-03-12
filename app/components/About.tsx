@@ -59,6 +59,22 @@ const About = () => {
                 When I'm not coding or working on AI projects, you can find me exploring nature, reading tech blogs, 
                 contributing to open-source projects, or diving deep into the latest research papers in machine learning and AI.
               </p>
+              <p className="text-gray-300 text-lg leading-relaxed">
+                I'm a machine learning engineer who enjoys understanding how modern AI systems actually work under the hood.
+              </p>
+              <p className="text-gray-300 text-lg leading-relaxed">
+                Recently, I've been exploring large language models from a systems perspective — implementing inference pipelines, 
+                experimenting with GPU utilization strategies, and studying the parallelism techniques that make large-scale model 
+                training and serving possible.
+              </p>
+              <p className="text-gray-300 text-lg leading-relaxed">
+                I like building things from first principles, breaking complex systems into simple components, and learning by 
+                implementing ideas rather than just reading about them.
+              </p>
+              <p className="text-gray-300 text-lg leading-relaxed">
+                Apart from the technical side, I enjoy connecting with people through sports — I'm an active sportsperson. 
+                I'm recently learning squash and it has been pretty fun!
+              </p>
             </div>
           </motion.div>
         </div>

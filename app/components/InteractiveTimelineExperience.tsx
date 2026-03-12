@@ -25,8 +25,8 @@ interface ExperienceEntry {
 const experiences: ExperienceEntry[] = [
   {
     company: "CarinaAI",
-    position: "Data Science Intern",
-    date: "Oct 2025 - Dec 2025",
+    position: "AI Engineer Intern",
+    date: "Oct 2025 - Jan 2026",
     summary: "Engineered automated RAG pipeline and optimized ML deployment for healthcare AI systems.",
     details: [
       "Engineered an automated Chart Review RAG pipeline for the DeIdentifier product, boosting system accuracy from 69% to 82% through advanced post-processing and output flow validation.",

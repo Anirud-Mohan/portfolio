@@ -7,11 +7,11 @@ import Image from 'next/image'
 
 const Hero = () => {
   const roles = [
+    'AI Engineer',
     'Machine Learning Engineer',
     'Data Analyst',
     'Data Scientist',
     'Software Developer',
-    'Sports Analyst',
   ]
   const currentRole = useTypingEffect(roles, 50, 25, 2000)
 
@@ -53,7 +53,7 @@ const Hero = () => {
           transition={{ duration: 0.5, delay: 0.2 }}
           className="mt-4 text-xl sm:text-2xl text-gray-300"
         >
-          A fervent <span className="text-green-400 font-mono">{currentRole}</span>
+          A passionate <span className="text-green-400 font-mono">{currentRole}</span>
         </motion.p>
         <motion.p
           initial={{ opacity: 0, y: -20 }}
@@ -83,7 +83,7 @@ const Hero = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.8 }}
-        className="absolute bottom-8 text-white text-center"
+        className="absolute bottom-8 left-0 right-0 text-white text-center"
       >
         <p className="text-lg">Scroll down to learn more about me</p>
         <svg
