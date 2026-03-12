@@ -38,32 +38,10 @@ const About = () => {
           >
             <div className="space-y-6">
               <p className="text-gray-300 text-lg leading-relaxed">
-                I'm a passionate and aspiring machine learning engineer with expertise in modern GenAI technologies. I love creating
-                beautiful, responsive, and user-friendly chat-bots powered by Large Language Models that solve real-world problems.
-              </p>
-              <p className="text-gray-300 text-lg leading-relaxed">
-                My technical expertise spans across various domains including machine learning algorithms like XGBoost, AdaBoost, 
-                Linear Regression, Logistic Regression, SVM, and Kernalization. I'm particularly passionate about working with 
-                Large Language Models (LLMs), Retrieval-Augmented Generation (RAG), and fine-tuning techniques.
-              </p>
-              <p className="text-gray-300 text-lg leading-relaxed">
-                On the development side, I'm proficient in HTML, CSS, JavaScript, Python, and modern frameworks. I enjoy building 
-                full-stack applications that bridge the gap between cutting-edge AI capabilities and user-friendly interfaces.
-              </p>
-              <p className="text-gray-300 text-lg leading-relaxed">
-                I'm always eager to learn new technologies, contribute to innovative projects, and stay at the forefront of 
-                artificial intelligence and machine learning developments. My goal is to create impactful solutions that make 
-                a real difference in people's lives.
-              </p>
-              <p className="text-gray-300 text-lg leading-relaxed">
-                When I'm not coding or working on AI projects, you can find me exploring nature, reading tech blogs, 
-                contributing to open-source projects, or diving deep into the latest research papers in machine learning and AI.
-              </p>
-              <p className="text-gray-300 text-lg leading-relaxed">
                 I'm a machine learning engineer who enjoys understanding how modern AI systems actually work under the hood.
               </p>
               <p className="text-gray-300 text-lg leading-relaxed">
-                Recently, I've been exploring large language models from a systems perspective — implementing inference pipelines, 
+                Recently, I've been exploring large language models from a systems perspective, implementing inference pipelines, 
                 experimenting with GPU utilization strategies, and studying the parallelism techniques that make large-scale model 
                 training and serving possible.
               </p>
@@ -72,8 +50,8 @@ const About = () => {
                 implementing ideas rather than just reading about them.
               </p>
               <p className="text-gray-300 text-lg leading-relaxed">
-                Apart from the technical side, I enjoy connecting with people through sports — I'm an active sportsperson. 
-                I'm recently learning squash and it has been pretty fun!
+                Apart from the technical side, I enjoy connecting with people through sports. I'm an active sportsperson. 
+                I've recently picked up squash and it has been pretty fun!
               </p>
             </div>
           </motion.div>

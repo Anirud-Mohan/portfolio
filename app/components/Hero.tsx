@@ -16,74 +16,76 @@ const Hero = () => {
   const currentRole = useTypingEffect(roles, 50, 25, 2000)
 
   return (
-    <section id="hero" className="bg-opacity-80 min-h-screen flex flex-col items-center justify-center relative py-20 px-8">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.5 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.5 }}
-          className="mb-8 relative mx-auto flex-shrink-0"
-          style={{ width: '20rem', height: '20rem', maxWidth: '100vw' }}
-        >
-          <div className="w-full h-full rounded-full overflow-hidden border-4 border-slate-700 shadow-lg relative">
-            <Image
-              src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}/ani_new.png`}
-              alt="Anirud Mohan"
-              fill
-              style={{
-                objectFit: 'cover',
-                objectPosition: 'center center',
-              }}
-              className="transition-transform duration-300 hover:scale-105"
-              sizes="(max-width: 640px) 16rem, 20rem"
-            />
-          </div>
-        </motion.div>
-        <motion.h1
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white"
-        >
-          Hi, I'm Anirud Mohan
-        </motion.h1>
-        <motion.p
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="mt-4 text-xl sm:text-2xl text-gray-300"
-        >
-          A passionate <span className="text-green-400 font-mono">{currentRole}</span>
-        </motion.p>
-        <motion.p
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-          className="mt-4 text-xl sm:text-2xl text-gray-300"
-        >
-          Engineering smart, trustworthy, and effective applications with the power of Artificial Intelligence.
-        </motion.p>
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.6 }}
-          className="mt-8"
-        >
-          <Link
-            href="/resume.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-block bg-green-600 text-white px-6 py-3 rounded-md text-lg font-medium hover:bg-green-700 transition duration-300"
+    <section id="hero" className="bg-opacity-80 min-h-screen flex flex-col items-center relative py-20 px-8">
+      <div className="flex-1 flex items-center justify-center w-full">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.5 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5 }}
+            className="mb-8 relative mx-auto flex-shrink-0"
+            style={{ width: '20rem', height: '20rem', maxWidth: '100vw' }}
           >
-            Take a look at my Resume!
-          </Link>
-        </motion.div>
+            <div className="w-full h-full rounded-full overflow-hidden border-4 border-slate-700 shadow-lg relative">
+              <Image
+                src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}/ani_new.png`}
+                alt="Anirud Mohan"
+                fill
+                style={{
+                  objectFit: 'cover',
+                  objectPosition: 'center center',
+                }}
+                className="transition-transform duration-300 hover:scale-105"
+                sizes="(max-width: 640px) 16rem, 20rem"
+              />
+            </div>
+          </motion.div>
+          <motion.h1
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white"
+          >
+            Hi, I'm Anirud Mohan
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="mt-4 text-xl sm:text-2xl text-gray-300"
+          >
+            A passionate <span className="text-green-400 font-mono">{currentRole}</span>
+          </motion.p>
+          <motion.p
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+            className="mt-4 text-xl sm:text-2xl text-gray-300"
+          >
+            Engineering smart, trustworthy, and effective applications with the power of Artificial Intelligence.
+          </motion.p>
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.6 }}
+            className="mt-8"
+          >
+            <Link
+              href="/resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block bg-green-600 text-white px-6 py-3 rounded-md text-lg font-medium hover:bg-green-700 transition duration-300"
+            >
+              Take a look at my Resume!
+            </Link>
+          </motion.div>
+        </div>
       </div>
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.8 }}
-        className="absolute bottom-8 left-0 right-0 text-white text-center"
+        className="text-white text-center pb-2"
       >
         <p className="text-lg">Scroll down to learn more about me</p>
         <svg
