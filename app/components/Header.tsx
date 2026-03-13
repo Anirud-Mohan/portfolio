@@ -3,19 +3,34 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
+import { Menu, X } from 'lucide-react'
+import { usePathname } from 'next/navigation'
+
+const homeSections = [
+  { id: 'experience', label: 'Experience' },
+  { id: 'education', label: 'Education' },
+  { id: 'projects', label: 'Projects' },
+  { id: 'certifications', label: 'Certificates' },
+  { id: 'contact', label: 'Contact' },
+]
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false)
-  const [activeSection, setActiveSection] = useState('')
+  const [activeSection, setActiveSection] = useState('hero')
+  const [isScrolled, setIsScrolled] = useState(false)
+  const pathname = usePathname()
+  const isHome = pathname === '/'
 
   useEffect(() => {
+    if (!isHome) return
+
     const handleScroll = () => {
-      const sections = ['hero', 'about', 'education', 'experience', 'projects', 'contact']
+      const sections = ['hero', ...homeSections.map((section) => section.id)]
       const currentSection = sections.find(section => {
         const element = document.getElementById(section)
         if (element) {
           const rect = element.getBoundingClientRect()
-          return rect.top <= 100 && rect.bottom >= 100
+          return rect.top <= 180 && rect.bottom >= 180
         }
         return false
       })
@@ -25,136 +40,133 @@ const Header = () => {
     }
 
     window.addEventListener('scroll', handleScroll)
+    handleScroll()
+
     return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+  }, [isHome])
 
   useEffect(() => {
     const handleScroll = () => {
-      const header = document.querySelector('header')
-      if (header) {
-        if (window.scrollY > 100) {
-          header.classList.add('bg-opacity-90')
-          header.classList.remove('bg-opacity-0')
-        } else {
-          header.classList.add('bg-opacity-0')
-          header.classList.remove('bg-opacity-90')
-        }
-      }
+      setIsScrolled(window.scrollY > 24)
     }
 
     window.addEventListener('scroll', handleScroll)
+    handleScroll()
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
   const scrollToSection = (sectionId: string) => {
+    if (!isHome) return
+
     const element = document.getElementById(sectionId)
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' })
+      const offset = 96
+      const top = element.getBoundingClientRect().top + window.scrollY - offset
+      window.scrollTo({ top, behavior: 'smooth' })
     }
     setIsOpen(false)
   }
 
+  const navItems = [
+    ...homeSections.map((item) => ({
+      ...item,
+      href: `/#${item.id}`,
+    })),
+  ]
+
   return (
-    <header className="fixed w-full bg-gray-900 bg-opacity-90 shadow-sm z-50 transition-all duration-300">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center py-4 md:justify-start md:space-x-10">
-          <div className="flex justify-start lg:w-0 lg:flex-1">
-            <Link href="/" className="text-xl font-bold text-white">
-              Anirud Mohan
-            </Link>
-          </div>
-          <div className="-mr-2 -my-2 md:hidden">
-            <button
-              type="button"
-              className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-green-500"
-              onClick={() => setIsOpen(!isOpen)}
-            >
-              <span className="sr-only">Open menu</span>
-              <svg
-                className="h-6 w-6"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                aria-hidden="true"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              </svg>
-            </button>
-          </div>
-          <nav className="hidden md:flex space-x-10">
-            {['about', 'education', 'experience', 'projects', 'contact'].map((section) => (
-              <button
-                key={section}
-                onClick={() => scrollToSection(section)}
-                className={`text-base font-medium ${
-                  activeSection === section ? 'text-green-400' : 'text-gray-300 hover:text-white'
-                } transition duration-300`}
-              >
-                {section.charAt(0).toUpperCase() + section.slice(1)}
-              </button>
-            ))}
-          </nav>
+    <header className="fixed inset-x-0 top-0 z-50 px-4 py-4 sm:px-6 lg:px-8">
+      <div
+        className={`mx-auto flex max-w-7xl items-center justify-between rounded-full border px-4 py-3 transition-all duration-300 sm:px-6 ${
+          isScrolled
+            ? 'border-white/10 bg-slate-950/70 shadow-glow backdrop-blur-xl'
+            : 'border-white/5 bg-slate-950/35 backdrop-blur-md'
+        }`}
+      >
+        <div className="flex items-center gap-6">
+          <Link href="/" className="flex items-center gap-3">
+            <span className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-cyan-300/20 bg-cyan-300/10 text-sm font-semibold text-cyan-100">
+              AM
+            </span>
+            <div>
+              <p className="text-sm font-semibold tracking-[0.28em] text-white">ANIRUD MOHAN</p>
+              <p className="text-xs text-slate-400">ML Engineer · Data Science</p>
+            </div>
+          </Link>
         </div>
+
+        <nav className="hidden items-center gap-2 md:flex">
+          {navItems.map((item) =>
+            !isHome ? (
+              <Link
+                key={item.id}
+                href={item.href}
+                className={`rounded-full px-4 py-2 text-sm ${
+                  pathname === item.href
+                    ? 'bg-white/10 text-white'
+                    : 'text-slate-300 hover:bg-white/5 hover:text-white'
+                }`}
+              >
+                {item.label}
+              </Link>
+            ) : (
+              <button
+                key={item.id}
+                onClick={() => scrollToSection(item.id)}
+                className={`rounded-full px-4 py-2 text-sm transition ${
+                  activeSection === item.id
+                    ? 'bg-white/10 text-white'
+                    : 'text-slate-300 hover:bg-white/5 hover:text-white'
+                }`}
+              >
+                {item.label}
+              </button>
+            ),
+          )}
+        </nav>
+
+        <button
+          type="button"
+          className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-200 md:hidden"
+          onClick={() => setIsOpen((open) => !open)}
+        >
+          <span className="sr-only">Toggle menu</span>
+          {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+        </button>
       </div>
 
       <motion.div
-        initial={{ opacity: 0, y: -100 }}
-        animate={{ opacity: isOpen ? 1 : 0, y: isOpen ? 0 : -100 }}
-        transition={{ duration: 0.3 }}
-        className="absolute top-0 inset-x-0 p-2 transition transform origin-top-right md:hidden"
+        initial={false}
+        animate={{
+          opacity: isOpen ? 1 : 0,
+          y: isOpen ? 0 : -12,
+          pointerEvents: isOpen ? 'auto' : 'none',
+        }}
+        transition={{ duration: 0.2 }}
+        className="mx-auto mt-3 max-w-7xl md:hidden"
       >
-        <div className="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 bg-gray-800 divide-y-2 divide-gray-700">
-          <div className="pt-5 pb-6 px-5">
-            <div className="flex items-center justify-between">
-              <div>
-                <Link href="/" className="text-xl font-bold text-white">
-                  Anirud Mohan
-                </Link>
-              </div>
-              <div className="-mr-2">
-                <button
-                  type="button"
-                  className="bg-gray-800 rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-green-500"
-                  onClick={() => setIsOpen(!isOpen)}
+        <div className="surface-panel overflow-hidden p-3">
+          <div className="grid gap-2">
+            {navItems.map((item) =>
+              !isHome ? (
+                <Link
+                  key={item.id}
+                  href={item.href}
+                  onClick={() => setIsOpen(false)}
+                  className="rounded-2xl px-4 py-3 text-sm text-slate-200 hover:bg-white/5"
                 >
-                  <span className="sr-only">Close menu</span>
-                  <svg
-                    className="h-6 w-6"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    aria-hidden="true"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M6 18L18 6M6 6l12 12"
-                    />
-                  </svg>
+                  {item.label}
+                </Link>
+              ) : (
+                <button
+                  key={item.id}
+                  onClick={() => scrollToSection(item.id)}
+                  className="rounded-2xl px-4 py-3 text-left text-sm text-slate-200 hover:bg-white/5"
+                >
+                  {item.label}
                 </button>
-              </div>
-            </div>
-            <div className="mt-6">
-              <nav className="grid gap-y-8">
-                {['about', 'education', 'experience', 'projects', 'contact'].map((section) => (
-                  <button
-                    key={section}
-                    onClick={() => scrollToSection(section)}
-                    className="text-base font-medium text-gray-300 hover:text-white transition duration-300"
-                  >
-                    {section.charAt(0).toUpperCase() + section.slice(1)}
-                  </button>
-                ))}
-              </nav>
-            </div>
+              ),
+            )}
           </div>
         </div>
       </motion.div>

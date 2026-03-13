@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import ProjectCard from './ProjectCard'
+import SectionHeading from './SectionHeading'
 
 const projects = [
   {
@@ -87,21 +88,19 @@ const childVariants = {
 
 const Projects = () => {
   return (
-    <section id="projects" className="py-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.h2
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="text-5xl font-extrabold text-center mb-12 text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-500"
-        >
-          Projects that I have worked on!
-        </motion.h2>
+    <section id="projects" className="section-shell">
+      <div className="page-shell">
+        <SectionHeading
+          eyebrow="Projects"
+          title="Selected builds across AI, optimization, and data systems."
+          description="Interactive cards with clearer hierarchy, stronger visual rhythm, and room for the work to speak for itself."
+        />
         <motion.div
           variants={containerVariants}
           initial="hidden"
-          animate="visible"
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.15 }}
+          className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3"
         >
           {projects.map((project, index) => (
             <motion.div key={project.id} variants={childVariants} className="h-full">

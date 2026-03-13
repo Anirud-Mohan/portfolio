@@ -3,15 +3,102 @@
 @tailwind utilities;
 
 :root {
-  --foreground: 255 255 255;
+  --background: 4 10 24;
+  --foreground: 241 245 249;
+  --card: 10 18 38;
+  --card-foreground: 241 245 249;
+  --muted: 15 23 42;
+  --muted-foreground: 148 163 184;
+  --border: 148 163 184;
+  --input: 30 41 59;
+  --ring: 116 255 212;
+  --accent: 15 23 42;
+  --accent-foreground: 226 232 240;
+  --primary: 116 255 212;
+  --primary-foreground: 4 10 24;
+  --secondary: 96 165 250;
+  --secondary-foreground: 239 246 255;
 }
 
 html {
   scroll-behavior: smooth;
+  background: rgb(var(--background));
 }
 
 body {
+  min-height: 100vh;
   color: rgb(var(--foreground));
+  background:
+    radial-gradient(circle at top, rgba(27, 58, 112, 0.35), transparent 32%),
+    radial-gradient(circle at 20% 20%, rgba(18, 183, 152, 0.16), transparent 24%),
+    linear-gradient(180deg, rgba(3, 7, 18, 0.96), rgba(4, 10, 24, 1));
+  overflow-x: hidden;
+}
+
+* {
+  border-color: rgb(var(--border) / 0.16);
+}
+
+::selection {
+  background: rgba(116, 255, 212, 0.2);
+  color: rgb(var(--foreground));
+}
+
+@layer base {
+  body {
+    @apply antialiased;
+  }
+
+  a,
+  button {
+    @apply transition-colors;
+  }
+}
+
+@layer components {
+  .page-shell {
+    @apply relative mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+
+  .section-shell {
+    @apply relative py-24 sm:py-28;
+  }
+
+  .section-label {
+    @apply inline-flex items-center rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[0.7rem] font-medium uppercase tracking-[0.28em] text-cyan-200/80;
+  }
+
+  .section-title {
+    @apply text-3xl font-semibold tracking-tight text-white sm:text-4xl md:text-5xl;
+  }
+
+  .section-copy {
+    @apply max-w-2xl text-base leading-7 text-slate-300 sm:text-lg;
+  }
+
+  .surface-panel {
+    @apply rounded-[28px] border border-white/10 bg-slate-950/55 shadow-panel backdrop-blur-xl;
+  }
+
+  .surface-card {
+    @apply rounded-[24px] border border-white/10 bg-slate-950/55 shadow-panel backdrop-blur-xl;
+  }
+
+  .accent-line {
+    @apply absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-cyan-300/60 to-transparent;
+  }
+
+  .pill {
+    @apply inline-flex items-center rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-sm text-slate-300;
+  }
+
+  .primary-button {
+    @apply inline-flex items-center justify-center rounded-full border border-cyan-300/20 bg-cyan-300 px-5 py-3 text-sm font-semibold text-slate-950 shadow-[0_10px_40px_rgba(116,255,212,0.22)] transition hover:-translate-y-0.5 hover:bg-cyan-200;
+  }
+
+  .secondary-button {
+    @apply inline-flex items-center justify-center rounded-full border border-white/10 bg-white/5 px-5 py-3 text-sm font-semibold text-white transition hover:border-white/20 hover:bg-white/10;
+  }
 }
 
 /* Optimize performance for the canvas background */
@@ -33,4 +120,3 @@ canvas {
 .overflow-x-hidden {
   overflow-x: hidden;
 }
-

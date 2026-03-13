@@ -2,11 +2,13 @@
 
 import type React from "react"
 
-import { useState, useRef, useEffect } from "react"
-import { motion, useAnimation, useInView, useScroll, useTransform } from "framer-motion"
-import { Calendar, X } from "lucide-react"
+import { useEffect, useMemo, useRef, useState } from "react"
+import { AnimatePresence, motion, useScroll, useTransform } from "framer-motion"
+import { ArrowUpRight, Calendar, X } from "lucide-react"
 import { FaPython, FaJava, FaDocker, FaGitAlt, FaDatabase, FaCloud, FaCogs } from "react-icons/fa"
 import { SiTensorflow, SiPytorch, SiSpringboot, SiMongodb, SiD3Dotjs } from "react-icons/si"
+import { createPortal } from "react-dom"
+import { usePointerGlow } from "../hooks/usePointerGlow"
 
 interface Skill {
   name: string
@@ -87,182 +89,194 @@ const experiences: ExperienceEntry[] = [
 
 const InteractiveTimelineExperience = () => {
   const [selectedExperience, setSelectedExperience] = useState<ExperienceEntry | null>(null)
-  const [hoveredSkillsCard, setHoveredSkillsCard] = useState<number | null>(null)
-  const controls = useAnimation()
-  const ref = useRef(null)
   const timelineRef = useRef<HTMLDivElement>(null)
-  const inView = useInView(ref, { amount: 0.3 })
-  
-  // Enhanced scroll-based timeline growth
+  const modalGlow = usePointerGlow()
+
   const { scrollYProgress } = useScroll({
     target: timelineRef,
-    offset: ["start center", "end center"]
+    offset: ["start 0.8", "end 0.3"]
   })
-  
-  const timelineHeight = useTransform(scrollYProgress, [0, 1], ["0%", "100%"])
+  const timelineHeight = useTransform(scrollYProgress, [0, 1], ["4%", "100%"])
+  const accentPositions = useMemo(() => ["12%", "48%", "84%"], [])
 
   useEffect(() => {
-    if (inView) {
-      controls.start("visible")
+    if (!selectedExperience) return
+
+    const previousBodyOverflow = document.body.style.overflow
+    const previousHtmlOverflow = document.documentElement.style.overflow
+
+    document.body.style.overflow = "hidden"
+    document.documentElement.style.overflow = "hidden"
+
+    return () => {
+      document.body.style.overflow = previousBodyOverflow
+      document.documentElement.style.overflow = previousHtmlOverflow
     }
-  }, [controls, inView])
+  }, [selectedExperience])
 
   return (
-    <div className="relative min-h-[600px] overflow-hidden z-10 max-w-6xl mx-auto px-4" ref={ref}>
-      {/* Background elements */}
-      <div className="absolute inset-0 bg-gradient-to-b from-gray-900 to-gray-800 opacity-50"></div>
-      <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCI+CjxyZWN0IHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgZmlsbD0iIzI3MjcyNyI+PC9yZWN0Pgo8Y2lyY2xlIGN4PSIzMCIgY3k9IjMwIiByPSIxIiBmaWxsPSIjMzk1NzZCIj48L2NpcmNsZT4KPC9zdmc+')] opacity-10"></div>
-
-      {/* Timeline container with scroll reference */}
-      <div ref={timelineRef} className="relative">
-        {/* Background timeline line (full height) */}
-        <div className="absolute left-1/2 top-10 bottom-10 w-0.5 bg-gray-600 transform -translate-x-1/2"></div>
-        
-        {/* Progressive timeline line that grows with scroll */}
-        <motion.div
-          className="absolute left-1/2 top-10 w-0.5 bg-gradient-to-b from-green-400 to-green-500 transform -translate-x-1/2 origin-top"
-          style={{ height: timelineHeight }}
-        ></motion.div>
-
-        {/* Experience boxes container */}
-        <div className="flex flex-col items-center justify-center min-h-full py-20 relative z-20">
-          {experiences.map((exp, index) => {
-            // Calculate when each dot should appear based on scroll progress
-            const dotThreshold = (index + 1) / experiences.length
-            const dotScale = useTransform(
-              scrollYProgress, 
-              [dotThreshold - 0.1, dotThreshold], 
-              [0, 1]
-            )
-            
-            return (
-              <div key={index} className="flex w-full items-center mb-20">
-                {/* Enhanced Timeline dot with clean scroll-based appearance */}
-                <motion.div
-                  className="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-green-500 rounded-full z-10 border-2 border-white shadow-lg"
-                  style={{ scale: dotScale }}
-                  whileHover={{ 
-                    scale: 1.5,
-                    boxShadow: "0 0 15px rgba(74, 222, 128, 0.6)"
-                  }}
-                  transition={{ duration: 0.2 }}
-                ></motion.div>
-
-            {/* Left side content (Work Experience) */}
-            <motion.div
-              className="w-[45%] p-6 bg-gray-800 rounded-lg shadow-lg cursor-pointer z-30"
-              initial={{ opacity: 0, x: -50 }}
-              animate={controls}
-              variants={{
-                visible: { opacity: 1, x: 0, transition: { duration: 0.5, delay: index * 0.4 } },
-              }}
-              whileHover={{ scale: 1.05, boxShadow: "0 0 20px rgba(74, 222, 128, 0.4)" }}
-              onClick={() => setSelectedExperience(exp)}
-            >
-              <h3 className="text-2xl font-bold text-green-400 mb-2">{exp.company}</h3>
-              <h4 className="text-xl font-semibold text-white mb-2">{exp.position}</h4>
-              <p className="text-sm text-gray-400 mb-4 flex items-center">
-                <Calendar className="w-4 h-4 mr-2" />
-                {exp.date}
-              </p>
-              <p className="text-gray-300">{exp.summary}</p>
-            </motion.div>
-
-            {/* Right side content (Skills) with Simple Sequential Reveal */}
-            <motion.div
-              className="w-[45%] ml-auto p-6 bg-gray-800 rounded-lg shadow-lg z-30"
-              initial={{ opacity: 0, x: 50 }}
-              animate={controls}
-              variants={{
-                visible: { opacity: 1, x: 0, transition: { duration: 0.5, delay: index * 0.4 + 0.2 } },
-              }}
-              whileHover={{ scale: 1.05, boxShadow: "0 0 20px rgba(74, 222, 128, 0.4)" }}
-              onMouseEnter={() => setHoveredSkillsCard(index)}
-              onMouseLeave={() => setHoveredSkillsCard(null)}
-            >
-              <h4 className="text-xl font-semibold text-green-400 mb-4">Skills & Technologies</h4>
-              <div className="grid grid-cols-3 gap-4">
-                {exp.skills.map((skill, skillIndex) => (
-                  <motion.div 
-                    key={skillIndex} 
-                    className="flex flex-col items-center"
-                    initial={{ opacity: 0, scale: 0.5 }}
-                    animate={{ 
-                      opacity: hoveredSkillsCard === index ? 1 : 0.7,
-                      scale: hoveredSkillsCard === index ? 1 : 0.9
-                    }}
-                    transition={{ 
-                      duration: 0.3,
-                      delay: hoveredSkillsCard === index ? skillIndex * 0.08 : 0,
-                      ease: "easeOut"
-                    }}
-                    whileHover={{ 
-                      scale: 1.1, 
-                      transition: { duration: 0.2 }
-                    }}
-                  >
-                    <skill.icon className="w-8 h-8 text-green-400 mb-2" />
-                    <span className="text-xs text-gray-300 text-center">{skill.name}</span>
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
-          </div>
-            )
-          })}
-        </div>
-      </div>      {/* Modal for additional details */}
-      {selectedExperience && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
-          onClick={() => setSelectedExperience(null)}
-        >
+    <div ref={timelineRef} className="surface-panel relative px-6 py-10 sm:px-8 sm:py-12">
+      <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-[28px]">
+        <div className="accent-line" />
+        <div className="absolute inset-0 bg-hero-grid bg-[size:48px_48px] opacity-[0.04]" />
+        {accentPositions.map((top) => (
           <motion.div
-            className="bg-gray-800 rounded-lg p-8 max-w-4xl w-full max-h-[90vh] overflow-y-auto"
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.9, opacity: 0 }}
-            transition={{ type: "spring", damping: 15 }}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="flex justify-between items-start mb-4">
-              <div>
-                <h2 className="text-2xl font-bold text-green-400">{selectedExperience.company}</h2>
-                <h3 className="text-xl font-semibold text-white">{selectedExperience.position}</h3>
-                <p className="text-sm text-gray-400 mt-1">{selectedExperience.date}</p>
+            key={top}
+            className="absolute left-0 right-0 h-40 bg-[radial-gradient(circle,rgba(116,255,212,0.08),transparent_70%)] blur-3xl"
+            style={{ top }}
+          />
+        ))}
+      </div>
+
+      <div className="relative z-10">
+        <div className="absolute bottom-12 left-[19px] top-12 hidden w-px bg-white/10 md:block" />
+        <motion.div
+          className="absolute left-[19px] top-12 hidden w-px origin-top bg-gradient-to-b from-cyan-200 via-cyan-300/80 to-transparent md:block"
+          style={{ height: timelineHeight }}
+        />
+
+        <div className="space-y-8">
+          {experiences.map((exp, index) => (
+            <motion.div
+              key={exp.company}
+              initial={{ opacity: 0, y: 32 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.25 }}
+              transition={{ duration: 0.55, delay: index * 0.08 }}
+              className="relative md:pl-16"
+            >
+              <div className="absolute left-0 top-8 hidden h-10 w-10 items-center justify-center rounded-full border border-cyan-300/30 bg-slate-950/90 shadow-glow md:flex">
+                <div className="h-2.5 w-2.5 rounded-full bg-cyan-200" />
               </div>
-              <button
-                onClick={() => setSelectedExperience(null)}
-                className="text-gray-400 hover:text-white transition-colors"
-              >
-                <X className="w-6 h-6" />
-              </button>
-            </div>
-            <div className="mt-4">
-              <h4 className="text-lg font-semibold text-white mb-2">Key Achievements and Responsibilities:</h4>
-              <ul className="list-disc list-inside text-gray-300 space-y-2">
-                {selectedExperience.details.map((detail, index) => (
-                  <li key={index}>{detail}</li>
-                ))}
-              </ul>
-            </div>
-            <div className="mt-6">
-              <h4 className="text-lg font-semibold text-white mb-2">Skills & Technologies:</h4>
-              <div className="flex flex-wrap gap-4">
-                {selectedExperience.skills.map((skill, index) => (
-                  <div key={index} className="flex items-center">
-                    <skill.icon className="w-6 h-6 text-green-400 mr-2" />
-                    <span className="text-gray-300">{skill.name}</span>
+
+              <div className="surface-card relative overflow-hidden p-6 sm:p-8">
+                <div className="accent-line" />
+                <div className="grid gap-6 lg:grid-cols-[1fr]">
+                  <div>
+                    <div className="flex flex-col gap-5 xl:flex-row xl:items-start xl:justify-between">
+                      <div>
+                        <div className="flex flex-wrap items-center gap-3">
+                          <span className="section-label">Role {String(index + 1).padStart(2, "0")}</span>
+                          <p className="flex items-center text-sm text-slate-400">
+                            <Calendar className="mr-2 h-4 w-4 text-cyan-200" />
+                            {exp.date}
+                          </p>
+                        </div>
+
+                        <h3 className="mt-5 text-2xl font-semibold text-white sm:text-3xl">{exp.company}</h3>
+                        <p className="mt-2 text-lg text-cyan-200">{exp.position}</p>
+                      </div>
+
+                      <div className="flex max-w-xl flex-wrap gap-2 xl:justify-end">
+                        {exp.skills.map((skill) => (
+                          <div
+                            key={skill.name}
+                            className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-3 py-2 text-xs text-slate-200"
+                          >
+                            <skill.icon className="h-3.5 w-3.5 text-cyan-200" />
+                            {skill.name}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                    <p className="mt-5 max-w-2xl text-base leading-7 text-slate-300">{exp.summary}</p>
+
+                    <motion.button
+                      onClick={() => setSelectedExperience(exp)}
+                      whileTap={{ scale: 0.97 }}
+                      className="mt-8 inline-flex items-center text-sm font-medium text-cyan-200 transition hover:text-white"
+                    >
+                      View impact and responsibilities
+                      <ArrowUpRight className="ml-2 h-4 w-4" />
+                    </motion.button>
                   </div>
-                ))}
+                </div>
               </div>
-            </div>
-          </motion.div>
-        </motion.div>
-      )}
+            </motion.div>
+          ))}
+        </div>
+      </div>
+
+      {typeof document !== "undefined" &&
+        createPortal(
+          <AnimatePresence>
+            {selectedExperience && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="fixed inset-0 z-[80] grid place-items-center bg-slate-950/80 p-4 backdrop-blur-sm"
+                onClick={() => setSelectedExperience(null)}
+              >
+                <motion.div
+                  className="surface-panel relative my-auto max-h-[85vh] w-full max-w-4xl overflow-y-auto p-8 sm:p-10"
+                  initial={{ scale: 0.96, opacity: 0, y: 18 }}
+                  animate={{ scale: 1, opacity: 1, y: 0 }}
+                  exit={{ scale: 0.98, opacity: 0, y: 10 }}
+                  transition={{ type: "spring", damping: 18, stiffness: 280 }}
+                  onPointerMove={modalGlow.handlePointerMove}
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <div className="accent-line" />
+                  <div
+                    className="pointer-events-none absolute inset-0 opacity-80"
+                    style={{
+                      background: `radial-gradient(circle at ${modalGlow.pointer.x}% ${modalGlow.pointer.y}%, rgba(116,255,212,0.12), transparent 34%)`,
+                    }}
+                  />
+                  <div className="flex items-start justify-between gap-6">
+                    <div>
+                      <span className="section-label">Experience detail</span>
+                      <h2 className="mt-5 text-2xl font-semibold text-white sm:text-3xl">{selectedExperience.company}</h2>
+                      <h3 className="mt-2 text-lg text-cyan-200">{selectedExperience.position}</h3>
+                      <p className="mt-2 text-sm text-slate-400">{selectedExperience.date}</p>
+                    </div>
+                    <div className="hidden max-w-md flex-wrap justify-end gap-2 md:flex">
+                      {selectedExperience.skills.map((skill) => (
+                        <div
+                          key={skill.name}
+                          className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-3 py-2 text-xs text-slate-200"
+                        >
+                          <skill.icon className="h-3.5 w-3.5 text-cyan-200" />
+                          {skill.name}
+                        </div>
+                      ))}
+                    </div>
+                    <button
+                      onClick={() => setSelectedExperience(null)}
+                      className="rounded-full border border-white/10 bg-white/5 p-2 text-slate-300 hover:text-white"
+                    >
+                      <X className="h-5 w-5" />
+                    </button>
+                  </div>
+
+                  <div className="mt-8">
+                    <div className="mb-4 flex flex-wrap gap-2 md:hidden">
+                      {selectedExperience.skills.map((skill) => (
+                        <div
+                          key={skill.name}
+                          className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-3 py-2 text-xs text-slate-200"
+                        >
+                          <skill.icon className="h-3.5 w-3.5 text-cyan-200" />
+                          {skill.name}
+                        </div>
+                      ))}
+                    </div>
+                    <h4 className="text-sm uppercase tracking-[0.24em] text-slate-500">Responsibilities</h4>
+                    <ul className="mt-4 space-y-3 text-sm leading-7 text-slate-300">
+                      {selectedExperience.details.map((detail, index) => (
+                        <li key={index} className="rounded-2xl border border-white/5 bg-white/[0.03] px-5 py-4">
+                          {detail}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>,
+          document.body,
+        )}
     </div>
   )
 }

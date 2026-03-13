@@ -2,63 +2,80 @@
 
 import { motion } from 'framer-motion'
 import Image from 'next/image'
+import SectionHeading from './SectionHeading'
 
 const About = () => {
+  const strengths = [
+    'Machine learning systems with measurable impact',
+    'LLM workflows, guardrails, and retrieval pipelines',
+    'Full-stack thinking for polished end-user experiences',
+    'Fast learning across research, data, and product delivery',
+  ]
+
   return (
-    <section id="about" className="py-20 min-h-screen flex items-center">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-        <motion.h2
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="text-5xl font-extrabold text-center mb-16 text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-500"
-        >
-          About Me
-        </motion.h2>
-        <div className="flex flex-col lg:flex-row items-center lg:items-start gap-12">
+    <section id="about" className="section-shell">
+      <div className="page-shell">
+        <SectionHeading
+          eyebrow="About"
+          title="Minimal presentation, clear story."
+          description="A concise overview of what I work on, how I think, and where I bring the most value."
+        />
+
+        <div className="grid gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
           <motion.div
-            initial={{ opacity: 0, scale: 0.5 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5 }}
-            className="flex-shrink-0"
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.6 }}
+            className="surface-panel relative overflow-hidden p-8"
           >
-            <Image
-              src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}/ani_animated.jpeg`}
-              alt="Anirud Mohan"
-              width={350}
-              height={350}
-              className="rounded-full border-4 border-green-400"
-            />
+            <div className="accent-line" />
+            <div className="relative mx-auto aspect-square max-w-sm overflow-hidden rounded-[28px] border border-white/10">
+              <Image
+                src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}/ani_animated.jpeg`}
+                alt="Anirud Mohan"
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 420px"
+              />
+            </div>
+
+            <div className="relative mt-6 space-y-3">
+              <p className="text-xs uppercase tracking-[0.24em] text-slate-500">Current focus</p>
+              <p className="text-lg text-white">Machine learning systems, production-ready AI, and sharp digital experiences.</p>
+            </div>
           </motion.div>
+
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="bg-gray-800 shadow-md rounded-lg p-8 flex-grow w-full lg:w-auto"
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="surface-panel relative overflow-hidden p-8 sm:p-10"
           >
-            <div className="space-y-6">
-              <p className="text-gray-300 text-lg leading-relaxed">
-                I'm a passionate and aspiring machine learning engineer with expertise in modern GenAI technologies. I love creating
-                beautiful, responsive, and user-friendly chat-bots powered by Large Language Models that solve real-world problems.
+            <div className="accent-line" />
+            <div className="relative space-y-6">
+              <p className="text-lg leading-8 text-slate-300">
+                I&apos;m a machine learning engineer with experience across GenAI systems, predictive modeling,
+                and product-focused development. I enjoy translating complex model behavior into interfaces and
+                workflows that feel useful, trustworthy, and easy to adopt.
               </p>
-              <p className="text-gray-300 text-lg leading-relaxed">
-                My technical expertise spans across various domains including machine learning algorithms like XGBoost, AdaBoost, 
-                Linear Regression, Logistic Regression, SVM, and Kernalization. I'm particularly passionate about working with 
-                Large Language Models (LLMs), Retrieval-Augmented Generation (RAG), and fine-tuning techniques.
+              <p className="text-lg leading-8 text-slate-300">
+                My work spans LLM applications, retrieval-augmented systems, optimization, classical machine learning,
+                and full-stack implementation. I care about both the intelligence layer and the user experience around it.
               </p>
-              <p className="text-gray-300 text-lg leading-relaxed">
-                On the development side, I'm proficient in HTML, CSS, JavaScript, Python, and modern frameworks. I enjoy building 
-                full-stack applications that bridge the gap between cutting-edge AI capabilities and user-friendly interfaces.
+              <p className="text-lg leading-8 text-slate-300">
+                Outside of work, I&apos;m drawn to sports, research, and continuous technical exploration, which keeps my
+                projects grounded in curiosity as much as execution.
               </p>
-              <p className="text-gray-300 text-lg leading-relaxed">
-                I'm always eager to learn new technologies, contribute to innovative projects, and stay at the forefront of 
-                artificial intelligence and machine learning developments. My goal is to create impactful solutions that make 
-                a real difference in people's lives.
-              </p>
-              <p className="text-gray-300 text-lg leading-relaxed">
-                When I'm not coding or working on AI projects, you can find me exploring nature, reading tech blogs, 
-                contributing to open-source projects, or diving deep into the latest research papers in machine learning and AI.
-              </p>
+
+              <div className="grid gap-3 pt-4 sm:grid-cols-2">
+                {strengths.map((item) => (
+                  <div key={item} className="surface-card p-4 text-sm leading-6 text-slate-300">
+                    {item}
+                  </div>
+                ))}
+              </div>
             </div>
           </motion.div>
         </div>

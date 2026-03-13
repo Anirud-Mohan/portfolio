@@ -7,7 +7,7 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
   title: 'Anirud Mohan - Portfolio',
-  description: 'Showcase of professional work and skills in Machine Learning and Data Science',
+  description: 'Sleek portfolio for Anirud Mohan featuring machine learning work, experience, projects, and contact information.',
 }
 
 export default function RootLayout({
@@ -17,10 +17,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} bg-gray-900 text-white`}>
+      <body className={`${inter.className} bg-background text-foreground`}>
         <ImmersiveBackground />
         <Header />
-        <main className="relative">{children}</main>
+        <main className="relative isolate min-h-screen pt-24">{children}</main>
       </body>
     </html>
   )

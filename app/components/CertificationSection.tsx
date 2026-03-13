@@ -2,13 +2,11 @@
 
 import type React from "react"
 
-import { useRef } from "react"
-import { useAnimationFrame } from "framer-motion"
+import { useState } from "react"
 import { Card, CardContent } from "./ui/card"
-import { Button } from "./ui/button"
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog"
-import { Award, CheckCircle, Medal, Star, BadgeIcon as Certificate, ExternalLink } from "lucide-react"
-import Image from "next/image"
+import { CheckCircle, BadgeIcon as Certificate, ExternalLink } from "lucide-react"
+import SectionHeading from "./SectionHeading"
+import { usePointerGlow } from "../hooks/usePointerGlow"
 
 interface Certification {
   title: string
@@ -77,122 +75,83 @@ const certifications: Certification[] = [
   }
 ]
 
-const CertificationCard = ({ certification }: { certification: Certification }) => {
-  const Icon = certification.icon
+function CertificationMark({ issuer, logo }: { issuer: string; logo: string }) {
+  const [hasError, setHasError] = useState(false)
+  const label = issuer
+    .split(" ")
+    .map((word) => word[0])
+    .join("")
+    .slice(0, 4)
+    .toUpperCase()
+
+  if (hasError || !logo) {
+    return (
+      <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-950 text-xs font-semibold tracking-[0.18em] text-cyan-200">
+        {label}
+      </div>
+    )
+  }
 
   return (
-    <Card className="bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700/50 text-white hover:transform hover:scale-[1.02] hover:shadow-2xl hover:shadow-green-500/20 transition-all duration-300 cursor-pointer w-[380px] h-[280px] flex-shrink-0 overflow-hidden relative group">
-      {/* Premium green accent line */}
-      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-green-400 via-green-500 to-green-400"></div>
-      
-      {/* Subtle corner accent */}
-      <div className="absolute top-4 right-4 w-8 h-8 border-t-2 border-r-2 border-green-400/30"></div>
+    <img
+      src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}${logo}`}
+      alt={`${issuer} logo`}
+      className="h-12 w-12 rounded-2xl object-contain bg-white p-2"
+      onError={() => setHasError(true)}
+    />
+  )
+}
 
-      <CardContent className="p-6 flex flex-col h-full relative">
-        {/* Header section */}
-        <div className="flex items-start justify-between mb-4">
+const CertificationCard = ({ certification }: { certification: Certification }) => {
+  const Icon = certification.icon
+  const glow = usePointerGlow()
+
+  return (
+    <Card
+      className="group relative h-[188px] w-[292px] flex-shrink-0 overflow-hidden rounded-[20px] border border-white/10 bg-slate-950/70 text-white shadow-panel transition-all duration-300 hover:border-cyan-300/20"
+      onPointerMove={glow.handlePointerMove}
+    >
+      <CardContent className="relative flex h-full flex-col p-5">
+        <div
+          className="pointer-events-none absolute inset-0 opacity-70"
+          style={{
+            background: `radial-gradient(circle at ${glow.pointer.x}% ${glow.pointer.y}%, rgba(116,255,212,0.10), transparent 34%)`,
+          }}
+        />
+        <div className="relative mb-4 flex items-start justify-between">
           <div className="flex items-center">
-            <div className="mr-3 bg-white/95 rounded-lg p-2 w-12 h-12 flex items-center justify-center shadow-md">
-              <Image
-                src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}${certification.logo ||'/placeholder.svg'}`}
-                alt={`${certification.issuer} logo`}
-                width={32}
-                height={32}
-                className="object-contain"
-              />
+            <div className="mr-3">
+              <CertificationMark issuer={certification.issuer} logo={certification.logo} />
             </div>
             <div>
-              <p className="text-green-400 text-sm font-medium uppercase tracking-wide">Certificate</p>
-              <p className="text-slate-300 text-xs">{certification.date}</p>
+              <p className="text-sm font-medium uppercase tracking-wide text-cyan-200">Certificate</p>
+              <p className="text-xs text-slate-400">{certification.date}</p>
             </div>
           </div>
-          <Icon className="w-6 h-6 text-green-400/60" />
+          <Icon className="h-6 w-6 text-cyan-200/60" />
         </div>
 
-        {/* Title section */}
-        <div className="flex-1 mb-4">
-          <h3 className="text-white text-lg font-semibold leading-tight mb-2 group-hover:text-green-50 transition-colors">
+        <div className="relative mb-4 flex-1">
+          <h3 className="mb-2 text-[15px] font-semibold leading-6 text-white">
             {certification.title}
           </h3>
-          <div className="flex items-center">
-            <div className="w-2 h-2 bg-green-400 rounded-full mr-2"></div>
-            <p className="text-slate-300 text-sm font-medium">{certification.issuer}</p>
-          </div>
+          <p className="text-sm font-medium text-slate-300">{certification.issuer}</p>
         </div>
 
-        {/* Professional badge/verification */}
-        <div className="flex items-center justify-between">
+        <div className="relative mt-auto flex items-center justify-between gap-3">
           <div className="flex items-center space-x-1">
             <CheckCircle className="w-4 h-4 text-emerald-400" />
             <span className="text-emerald-400 text-xs font-medium">Verified</span>
           </div>
-          
-          <Dialog>
-            <DialogTrigger asChild>
-              <Button 
-                size="sm"
-                className="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white text-sm font-semibold px-4 py-2 rounded-md shadow-md hover:shadow-lg transition-all duration-200"
-              >
-                View Details
-                <ExternalLink className="ml-1 w-3 h-3" />
-              </Button>
-            </DialogTrigger>
-            <DialogContent className="bg-gradient-to-br from-slate-800 to-slate-900 text-white border border-slate-700/50 max-w-md">
-              <DialogHeader>
-                <DialogTitle className="text-xl text-green-400 flex items-center">
-                  <Award className="mr-2 text-green-500" /> Certificate Details
-                </DialogTitle>
-              </DialogHeader>
-              <div className="mt-6 space-y-4">
-                {/* Enhanced modal header */}
-                <div className="flex items-center justify-center bg-slate-900/60 p-6 rounded-lg border border-slate-700/30">
-                  <div className="bg-white rounded-lg p-3 w-20 h-20 flex items-center justify-center shadow-lg">
-                    <Image
-                      src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}${certification.logo ||'/placeholder.svg'}`}
-                      alt={`${certification.issuer} logo`}
-                      width={60}
-                      height={60}
-                      className="object-contain"
-                    />
-                  </div>
-                </div>
-                
-                {/* Certificate information */}
-                <div className="bg-slate-900/60 p-4 rounded-lg border border-slate-700/30 space-y-3">
-                  <h4 className="text-lg font-semibold text-white">{certification.title}</h4>
-                  <div className="space-y-2">
-                    <div className="flex items-center">
-                      <div className="w-2 h-2 bg-green-400 rounded-full mr-3"></div>
-                      <span className="text-slate-300">Issued by: </span>
-                      <span className="text-green-400 font-medium ml-1">{certification.issuer}</span>
-                    </div>
-                    <div className="flex items-center">
-                      <div className="w-2 h-2 bg-green-400 rounded-full mr-3"></div>
-                      <span className="text-slate-300">Issue Date: </span>
-                      <span className="text-green-400 font-medium ml-1">{certification.date}</span>
-                    </div>
-                    <div className="flex items-center">
-                      <CheckCircle className="w-4 h-4 text-emerald-400 mr-2" />
-                      <span className="text-emerald-400 text-sm font-medium">Verified Credential</span>
-                    </div>
-                  </div>
-                </div>
-                
-                <Button
-                  className="mt-6 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-semibold py-3 w-full shadow-lg hover:shadow-xl transition-all duration-200"
-                  onClick={() => window.open(`${process.env.NEXT_PUBLIC_BASE_PATH || ''}${certification.credentialUrl}`, "_blank")}
-                >
-                  <ExternalLink className="mr-2 w-4 h-4" />
-                  Open Certificate
-                </Button>
-              </div>
-            </DialogContent>
-          </Dialog>
-        </div>
-
-        {/* Subtle background pattern */}
-        <div className="absolute bottom-0 right-0 w-20 h-20 opacity-5">
-          <Icon className="w-full h-full text-green-400" />
+          <a
+            href={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}${certification.credentialUrl}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex min-w-[92px] items-center justify-center rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/10"
+          >
+            Open
+            <ExternalLink className="ml-2 h-3 w-3" />
+          </a>
         </div>
       </CardContent>
     </Card>
@@ -200,34 +159,38 @@ const CertificationCard = ({ certification }: { certification: Certification }) 
 }
 
 export default function CertificationsSection() {
-  const containerRef = useRef<HTMLDivElement>(null)
-  const xRef = useRef(0)
-
-  useAnimationFrame(() => {
-    if (containerRef.current) {
-      xRef.current -= 1 // Reduced speed due to larger cards
-      if (xRef.current <= -containerRef.current.scrollWidth / 2) {
-        xRef.current = 0
-      }
-      containerRef.current.style.transform = `translateX(${xRef.current}px)`
-    }
-  })
+  const [isPaused, setIsPaused] = useState(false)
 
   return (
-    <section id="certifications" className="min-h-screen flex flex-col items-center justify-center px-4 py-16 relative bg-transparent">
-      <div className="text-center mb-16">
-        <h2 className="text-5xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-500">
-          Professional Certifications
-        </h2>
-        <div className="w-24 h-1 bg-gradient-to-r from-green-400 to-blue-500 mx-auto rounded-full"></div>
-        <p className="text-slate-400 mt-4 text-lg">Validated expertise and continuous learning</p>
-      </div>
+    <section id="certifications" className="section-shell">
+      <div className="page-shell">
+        <SectionHeading
+          eyebrow="Certifications"
+          title="Professional certifications."
+          description="A cleaner credential strip with a slower motion rhythm and easier interaction."
+        />
 
-      <div className="w-full max-w-7xl relative overflow-hidden">
-        <div ref={containerRef} className="flex space-x-6" style={{ width: "fit-content" }}>
-          {[...certifications, ...certifications].map((cert, index) => (
-            <CertificationCard key={index} certification={cert} />
-          ))}
+        <div
+          className="surface-panel relative overflow-hidden py-8"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+        >
+          <div className="accent-line" />
+          <div className="pointer-events-none absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-slate-950 to-transparent z-10" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-slate-950 to-transparent z-10" />
+          <div
+            className="hidden w-max animate-marquee gap-6 px-6 md:flex"
+            style={{ animationDuration: "55s", animationPlayState: isPaused ? "paused" : "running" }}
+          >
+            {[...certifications, ...certifications].map((cert, index) => (
+              <CertificationCard key={`${cert.title}-${index}`} certification={cert} />
+            ))}
+          </div>
+          <div className="flex gap-6 overflow-x-auto px-6 md:hidden">
+            {certifications.map((cert) => (
+              <CertificationCard key={cert.title} certification={cert} />
+            ))}
+          </div>
         </div>
       </div>
     </section>
