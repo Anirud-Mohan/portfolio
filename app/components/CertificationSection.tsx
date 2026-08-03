@@ -3,10 +3,8 @@
 import type React from "react"
 
 import { useState } from "react"
-import { Card, CardContent } from "./ui/card"
-import { CheckCircle, BadgeIcon as Certificate, ExternalLink } from "lucide-react"
+import { ExternalLink } from "lucide-react"
 import SectionHeading from "./SectionHeading"
-import { usePointerGlow } from "../hooks/usePointerGlow"
 
 interface Certification {
   title: string
@@ -14,8 +12,6 @@ interface Certification {
   date: string
   credentialUrl: string
   logo: string
-  color: string
-  icon: React.ElementType
 }
 
 const certifications: Certification[] = [
@@ -25,8 +21,6 @@ const certifications: Certification[] = [
     date: "Dec 2023",
     credentialUrl: "/certifications/IITK-ML_cert.pdf",
     logo: "/IIT_Kanpur_Logo.png",
-    color: "from-blue-500 to-purple-600",
-    icon: Certificate,
   },
   {
     title: "IBM Data Science Project Certificate",
@@ -34,8 +28,6 @@ const certifications: Certification[] = [
     date: "April 2023",
     credentialUrl: "/certifications/IBM_proj_cert.pdf",
     logo: "/IBM.jpeg",
-    color: "from-orange-500 to-red-600",
-    icon: Certificate,
   },
   {
     title: "Python Programming",
@@ -43,8 +35,6 @@ const certifications: Certification[] = [
     date: "May 2020",
     credentialUrl: "/certifications/Python_cert.pdf",
     logo: "/pluralsight.png",
-    color: "from-yellow-500 to-orange-600",
-    icon: Certificate,
   },
   {
     title: "R Programming",
@@ -52,8 +42,6 @@ const certifications: Certification[] = [
     date: "July 2020",
     credentialUrl: "/certifications/R_prog_cert.pdf",
     logo: "/pluralsight.png",
-    color: "from-green-500 to-teal-600",
-    icon: Certificate,
   },
   {
     title: "Big Data Analytics",
@@ -61,8 +49,6 @@ const certifications: Certification[] = [
     date: "March 2021",
     credentialUrl: "/certifications/Unschool_BD_cert.pdf",
     logo: "/unschool.png",
-    color: "from-blue-500 to-purple-600",
-    icon: Certificate,
   },
   {
     title: "TCS Knockdown the Lockdown",
@@ -70,9 +56,7 @@ const certifications: Certification[] = [
     date: "June 2020",
     credentialUrl: "/certifications/TCS_cert.pdf",
     logo: "/tcs.jpeg",
-    color: "from-orange-500 to-red-600",
-    icon: Certificate,
-  }
+  },
 ]
 
 function CertificationMark({ issuer, logo }: { issuer: string; logo: string }) {
@@ -86,7 +70,7 @@ function CertificationMark({ issuer, logo }: { issuer: string; logo: string }) {
 
   if (hasError || !logo) {
     return (
-      <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-950 text-xs font-semibold tracking-[0.18em] text-cyan-200">
+      <div className="flex h-10 w-10 items-center justify-center border border-border bg-muted font-mono text-[9px] tracking-[0.12em] text-muted-foreground">
         {label}
       </div>
     )
@@ -94,67 +78,35 @@ function CertificationMark({ issuer, logo }: { issuer: string; logo: string }) {
 
   return (
     <img
-      src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}${logo}`}
+      src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}${logo}`}
       alt={`${issuer} logo`}
-      className="h-12 w-12 rounded-2xl object-contain bg-white p-2"
+      className="h-10 w-10 border border-border bg-white object-contain p-1.5"
       onError={() => setHasError(true)}
     />
   )
 }
 
-const CertificationCard = ({ certification }: { certification: Certification }) => {
-  const Icon = certification.icon
-  const glow = usePointerGlow()
-
+const CertificationItem = ({ certification }: { certification: Certification }) => {
   return (
-    <Card
-      className="group relative h-[188px] w-[292px] flex-shrink-0 overflow-hidden rounded-[20px] border border-white/10 bg-slate-950/70 text-white shadow-panel transition-all duration-300 hover:border-cyan-300/20"
-      onPointerMove={glow.handlePointerMove}
-    >
-      <CardContent className="relative flex h-full flex-col p-5">
-        <div
-          className="pointer-events-none absolute inset-0 opacity-70"
-          style={{
-            background: `radial-gradient(circle at ${glow.pointer.x}% ${glow.pointer.y}%, rgba(116,255,212,0.10), transparent 34%)`,
-          }}
-        />
-        <div className="relative mb-4 flex items-start justify-between">
-          <div className="flex items-center">
-            <div className="mr-3">
-              <CertificationMark issuer={certification.issuer} logo={certification.logo} />
-            </div>
-            <div>
-              <p className="text-sm font-medium uppercase tracking-wide text-cyan-200">Certificate</p>
-              <p className="text-xs text-slate-400">{certification.date}</p>
-            </div>
-          </div>
-          <Icon className="h-6 w-6 text-cyan-200/60" />
-        </div>
-
-        <div className="relative mb-4 flex-1">
-          <h3 className="mb-2 text-[15px] font-semibold leading-6 text-white">
-            {certification.title}
-          </h3>
-          <p className="text-sm font-medium text-slate-300">{certification.issuer}</p>
-        </div>
-
-        <div className="relative mt-auto flex items-center justify-between gap-3">
-          <div className="flex items-center space-x-1">
-            <CheckCircle className="w-4 h-4 text-emerald-400" />
-            <span className="text-emerald-400 text-xs font-medium">Verified</span>
-          </div>
-          <a
-            href={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}${certification.credentialUrl}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex min-w-[92px] items-center justify-center rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/10"
-          >
-            Open
-            <ExternalLink className="ml-2 h-3 w-3" />
-          </a>
-        </div>
-      </CardContent>
-    </Card>
+    <div className="flex h-[120px] w-[300px] flex-shrink-0 items-center gap-4 border border-border bg-card px-4">
+      <CertificationMark issuer={certification.issuer} logo={certification.logo} />
+      <div className="min-w-0 flex-1">
+        <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
+          {certification.date}
+        </p>
+        <h3 className="mt-1 truncate text-sm font-medium text-foreground">{certification.title}</h3>
+        <p className="mt-1 truncate text-xs text-muted-foreground">{certification.issuer}</p>
+      </div>
+      <a
+        href={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}${certification.credentialUrl}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="inline-flex items-center border border-border px-3 py-2 font-mono text-[10px] uppercase tracking-[0.14em] text-foreground transition hover:bg-foreground hover:text-background"
+      >
+        Open
+        <ExternalLink className="ml-1.5 h-3 w-3" />
+      </a>
+    </div>
   )
 }
 
@@ -166,29 +118,28 @@ export default function CertificationsSection() {
       <div className="page-shell">
         <SectionHeading
           eyebrow="Certifications"
-          title="Professional certifications."
-          description="A cleaner credential strip with a slower motion rhythm and easier interaction."
+          title="Credentials."
+          description="A slow-moving strip — hover to pause, open to view."
         />
 
         <div
-          className="surface-panel relative overflow-hidden py-8"
+          className="relative overflow-hidden border border-border py-6"
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
         >
-          <div className="accent-line" />
-          <div className="pointer-events-none absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-slate-950 to-transparent z-10" />
-          <div className="pointer-events-none absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-slate-950 to-transparent z-10" />
+          <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-background to-transparent" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-background to-transparent" />
           <div
-            className="hidden w-max animate-marquee gap-6 px-6 md:flex"
+            className="hidden w-max animate-marquee gap-4 px-4 md:flex"
             style={{ animationDuration: "55s", animationPlayState: isPaused ? "paused" : "running" }}
           >
             {[...certifications, ...certifications].map((cert, index) => (
-              <CertificationCard key={`${cert.title}-${index}`} certification={cert} />
+              <CertificationItem key={`${cert.title}-${index}`} certification={cert} />
             ))}
           </div>
-          <div className="flex gap-6 overflow-x-auto px-6 md:hidden">
+          <div className="flex gap-4 overflow-x-auto px-4 md:hidden">
             {certifications.map((cert) => (
-              <CertificationCard key={cert.title} certification={cert} />
+              <CertificationItem key={cert.title} certification={cert} />
             ))}
           </div>
         </div>
@@ -196,4 +147,3 @@ export default function CertificationsSection() {
     </section>
   )
 }
-

@@ -3,21 +3,21 @@
 @tailwind utilities;
 
 :root {
-  --background: 4 10 24;
-  --foreground: 241 245 249;
-  --card: 10 18 38;
-  --card-foreground: 241 245 249;
-  --muted: 15 23 42;
-  --muted-foreground: 148 163 184;
-  --border: 148 163 184;
-  --input: 30 41 59;
-  --ring: 116 255 212;
-  --accent: 15 23 42;
-  --accent-foreground: 226 232 240;
-  --primary: 116 255 212;
-  --primary-foreground: 4 10 24;
-  --secondary: 96 165 250;
-  --secondary-foreground: 239 246 255;
+  --background: 5 5 5;
+  --foreground: 242 242 242;
+  --card: 15 15 15;
+  --card-foreground: 242 242 242;
+  --muted: 20 20 20;
+  --muted-foreground: 138 138 138;
+  --border: 34 34 34;
+  --input: 34 34 34;
+  --ring: 242 242 242;
+  --accent: 20 20 20;
+  --accent-foreground: 242 242 242;
+  --primary: 242 242 242;
+  --primary-foreground: 5 5 5;
+  --secondary: 138 138 138;
+  --secondary-foreground: 242 242 242;
 }
 
 html {
@@ -28,19 +28,28 @@ html {
 body {
   min-height: 100vh;
   color: rgb(var(--foreground));
-  background:
-    radial-gradient(circle at top, rgba(27, 58, 112, 0.35), transparent 32%),
-    radial-gradient(circle at 20% 20%, rgba(18, 183, 152, 0.16), transparent 24%),
-    linear-gradient(180deg, rgba(3, 7, 18, 0.96), rgba(4, 10, 24, 1));
+  background: rgb(var(--background));
   overflow-x: hidden;
 }
 
+body::before {
+  content: '';
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 180px 180px;
+}
+
 * {
-  border-color: rgb(var(--border) / 0.16);
+  border-color: rgb(var(--border));
 }
 
 ::selection {
-  background: rgba(116, 255, 212, 0.2);
+  background: rgba(242, 242, 242, 0.18);
   color: rgb(var(--foreground));
 }
 
@@ -57,66 +66,46 @@ body {
 
 @layer components {
   .page-shell {
-    @apply relative mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+    @apply relative mx-auto w-full max-w-6xl px-5 sm:px-8;
   }
 
   .section-shell {
-    @apply relative py-24 sm:py-28;
+    @apply relative border-t border-border py-20 sm:py-24;
   }
 
   .section-label {
-    @apply inline-flex items-center rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[0.7rem] font-medium uppercase tracking-[0.28em] text-cyan-200/80;
+    @apply font-mono text-[0.68rem] uppercase tracking-[0.28em] text-muted-foreground;
   }
 
   .section-title {
-    @apply text-3xl font-semibold tracking-tight text-white sm:text-4xl md:text-5xl;
+    @apply text-3xl font-medium tracking-tight text-foreground sm:text-4xl;
   }
 
   .section-copy {
-    @apply max-w-2xl text-base leading-7 text-slate-300 sm:text-lg;
+    @apply max-w-2xl text-base leading-7 text-muted-foreground;
   }
 
   .surface-panel {
-    @apply rounded-[28px] border border-white/10 bg-slate-950/55 shadow-panel backdrop-blur-xl;
+    @apply border border-border bg-card;
   }
 
   .surface-card {
-    @apply rounded-[24px] border border-white/10 bg-slate-950/55 shadow-panel backdrop-blur-xl;
+    @apply border border-border bg-card;
   }
 
   .accent-line {
-    @apply absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-cyan-300/60 to-transparent;
+    @apply absolute inset-x-0 top-0 h-px bg-border;
   }
 
   .pill {
-    @apply inline-flex items-center rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-sm text-slate-300;
+    @apply inline-flex items-center border border-border px-3 py-1 font-mono text-xs text-muted-foreground;
   }
 
   .primary-button {
-    @apply inline-flex items-center justify-center rounded-full border border-cyan-300/20 bg-cyan-300 px-5 py-3 text-sm font-semibold text-slate-950 shadow-[0_10px_40px_rgba(116,255,212,0.22)] transition hover:-translate-y-0.5 hover:bg-cyan-200;
+    @apply inline-flex items-center justify-center border border-foreground bg-foreground px-5 py-3 text-sm font-medium text-background transition hover:bg-transparent hover:text-foreground;
   }
 
   .secondary-button {
-    @apply inline-flex items-center justify-center rounded-full border border-white/10 bg-white/5 px-5 py-3 text-sm font-semibold text-white transition hover:border-white/20 hover:bg-white/10;
+    @apply inline-flex items-center justify-center border border-border bg-transparent px-5 py-3 text-sm font-medium text-foreground transition hover:border-foreground;
   }
-}
-
-/* Optimize performance for the canvas background */
-canvas {
-  image-rendering: optimizeSpeed;
-  image-rendering: -moz-crisp-edges;
-  image-rendering: -webkit-optimize-contrast;
-  image-rendering: optimize-contrast;
-  image-rendering: pixelated;
-  -ms-interpolation-mode: nearest-neighbor;
-}
-
-/* Ensure smooth scrolling and prevent layout shifts */
-.smooth-scroll {
-  @apply transition-all duration-300 ease-in-out;
-}
-
-/* Prevent background content from creating scrollbars */
-.overflow-x-hidden {
-  overflow-x: hidden;
 }

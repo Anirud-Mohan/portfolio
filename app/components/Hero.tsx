@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
+import { ArrowUpRight } from 'lucide-react'
 import { usePointerGlow } from '../hooks/usePointerGlow'
 
 const Hero = () => {
@@ -10,164 +11,165 @@ const Hero = () => {
   const aboutGlow = usePointerGlow()
   const workGlow = usePointerGlow()
   const interestGlow = usePointerGlow()
+
   const recentWork = {
     title: 'Brain MRI Diffusion',
     subtitle: 'Pathology-controllable generation',
-    date: '2024 - Present',
-    gist:
-      'I am currently working on a diffusion-based approach for generating healthy counterfactual brain MRI scans while preserving patient anatomy. The goal is to make pathological changes easier to study by comparing real scans with generated healthy counterparts. It combines medical imaging research with practical model development.',
+    date: '2024 — Present',
+    points: [
+      'Diffusion models that generate healthy counterfactual brain MRI while preserving anatomy.',
+      'Paired scans that make pathological change easier to study.',
+    ],
   }
+
   const recentInterest = {
     title: 'Currently reading',
-    subtitle: 'Research papers and technical writing',
+    subtitle: 'Papers and technical writing',
     date: 'Ongoing',
-    gist:
-      'Lately I have been reading research papers and strong technical blogs around retrieval systems, generative AI, and machine learning engineering. I want this space to stay flexible so I can keep updating it with papers, blog posts, or topics I am currently exploring.',
+    points: [
+      'Retrieval systems, generative AI, and ML engineering.',
+      'Space kept open for papers, posts, and topics in progress.',
+    ],
   }
 
-  return (
-    <section id="hero" className="relative flex min-h-[calc(100vh-5.5rem)] items-center py-3 sm:py-5">
-      <div className="page-shell">
-        <div className="grid gap-4 lg:grid-cols-[0.5fr_1.5fr] lg:items-start">
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55 }}
-            className="surface-panel relative overflow-hidden p-4 sm:p-5"
-          >
-            <div className="accent-line" />
-            <div className="absolute inset-0 bg-panel-radial opacity-80" />
+  const resumeHref = `${process.env.NEXT_PUBLIC_BASE_PATH || ''}/resume.pdf`
 
-            <div className="relative flex h-full flex-col">
-              <div className="relative mx-auto aspect-[0.95] w-full max-w-[190px] overflow-hidden rounded-[24px] border border-white/10 bg-white/5 sm:max-w-[220px]">
-                {showPortrait ? (
+  return (
+    <section id="hero" className="relative min-h-[calc(100vh-4rem)] border-b border-border">
+      <div className="page-shell grid min-h-[calc(100vh-4rem)] lg:grid-cols-[0.9fr_1.1fr]">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.7 }}
+          className="relative flex flex-col justify-between border-b border-border py-10 lg:border-b-0 lg:border-r lg:py-14 lg:pr-10"
+        >
+          <div className="relative aspect-[4/5] w-full max-w-md overflow-hidden border border-border bg-muted sm:max-w-sm lg:max-w-none">
+            {showPortrait ? (
                   <Image
-                    src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}/ani_new.png`}
+                    src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}/ani.jpg`}
                     alt="Anirud Mohan"
                     fill
-                    sizes="(max-width: 1024px) 190px, 220px"
-                    className="object-cover object-center"
+                    priority
+                    sizes="(max-width: 1024px) 90vw, 40vw"
+                    className="object-cover object-[58%_28%]"
                     onError={() => setShowPortrait(false)}
                   />
-                ) : (
-                  <div className="flex h-full items-center justify-center text-3xl font-semibold tracking-[0.28em] text-white">
-                    AM
-                  </div>
-                )}
+            ) : (
+              <div className="flex h-full items-center justify-center font-mono text-4xl tracking-[0.4em] text-muted-foreground">
+                AM
               </div>
+            )}
+          </div>
 
-              <div className="mt-3">
-                <p className="text-xs font-semibold uppercase tracking-[0.28em] text-white sm:text-sm">Anirud Mohan</p>
-                <p className="mt-1.5 text-sm leading-6 text-slate-400">
-                  Machine Learning Engineer · Data Science · Software Development
-                </p>
-              </div>
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 28 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.08 }}
-            className="grid gap-4"
-          >
-            <div
-              className="surface-panel relative overflow-hidden p-4 sm:p-5"
-              onPointerMove={aboutGlow.handlePointerMove}
+          <div className="mt-8">
+            <motion.h1
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.55, delay: 0.1 }}
+              className="text-4xl font-medium tracking-tight text-foreground sm:text-5xl"
             >
-              <div className="accent-line" />
-              <div className="absolute inset-0 bg-panel-radial opacity-70" />
+              Anirud Mohan
+            </motion.h1>
+            <motion.p
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.18 }}
+              className="mt-3 font-mono text-xs uppercase tracking-[0.22em] text-muted-foreground"
+            >
+              Machine Learning Engineer · Data Science · Software
+            </motion.p>
+            <motion.a
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.45, delay: 0.26 }}
+              href={resumeHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="primary-button mt-8 inline-flex"
+            >
+              View resume
+              <ArrowUpRight className="ml-2 h-4 w-4" />
+            </motion.a>
+          </div>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.12 }}
+          className="relative flex flex-col justify-center gap-10 py-10 lg:py-14 lg:pl-12"
+          onPointerMove={aboutGlow.handlePointerMove}
+        >
+          <div
+            className="pointer-events-none absolute inset-0 opacity-80"
+            style={{
+              background: `radial-gradient(circle at ${aboutGlow.pointer.x}% ${aboutGlow.pointer.y}%, rgba(242,242,242,0.05), transparent 36%)`,
+            }}
+          />
+          <div className="relative">
+            <p className="section-label">About</p>
+            <p className="mt-5 max-w-xl text-xl leading-8 text-foreground sm:text-2xl sm:leading-9">
+              Building reliable AI systems and practical products with a clear engineering mindset.
+            </p>
+            <p className="mt-5 max-w-xl text-base leading-7 text-muted-foreground">
+              I work across LLM applications, retrieval pipelines, medical imaging research, and
+              data-driven software — turning strong models into tools that feel useful and well built.
+            </p>
+          </div>
+
+          <div className="relative grid gap-8 border-t border-border pt-8 sm:grid-cols-2">
+            <div onPointerMove={workGlow.handlePointerMove} className="relative">
               <div
-                className="pointer-events-none absolute inset-0 opacity-80"
+                className="pointer-events-none absolute inset-0 opacity-70"
                 style={{
-                  background: `radial-gradient(circle at ${aboutGlow.pointer.x}% ${aboutGlow.pointer.y}%, rgba(116,255,212,0.14), transparent 30%)`,
+                  background: `radial-gradient(circle at ${workGlow.pointer.x}% ${workGlow.pointer.y}%, rgba(242,242,242,0.04), transparent 40%)`,
                 }}
               />
-              <div className="relative">
-                <span className="section-label">About me</span>
-                <h1 className="mt-2.5 max-w-3xl text-[1.65rem] font-semibold tracking-tight text-white sm:text-[2rem] lg:text-[2.35rem]">
-                  Building reliable AI systems and practical products with a clear engineering mindset.
-                </h1>
-                <p className="mt-2.5 max-w-3xl text-[0.92rem] leading-6 text-slate-300 sm:text-[0.96rem]">
-                  I work across LLM applications, retrieval pipelines, medical imaging research, and data-driven
-                  software. I care about turning strong models into tools that feel useful, trustworthy, and well built.
-                </p>
-                <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-400">
-                  Recent work spans healthcare AI, code intelligence, optimization, and graph-based analytics,
-                  with a focus on measurable impact and clean execution.
-                </p>
+              <div className="relative flex items-baseline justify-between gap-3">
+                <p className="section-label">Recent work</p>
+                <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
+                  {recentWork.date}
+                </span>
               </div>
+              <h2 className="relative mt-4 text-lg text-foreground">{recentWork.title}</h2>
+              <p className="relative mt-1 font-mono text-xs text-muted-foreground">{recentWork.subtitle}</p>
+              <ul className="relative mt-4 space-y-3 text-sm leading-6 text-muted-foreground">
+                {recentWork.points.map((point) => (
+                  <li key={point} className="border-l border-border pl-3">
+                    {point}
+                  </li>
+                ))}
+              </ul>
             </div>
 
-            <div className="grid gap-4 lg:grid-cols-[1.06fr_0.94fr]">
+            <div onPointerMove={interestGlow.handlePointerMove} className="relative">
               <div
-                className="surface-panel relative overflow-hidden p-4"
-                onPointerMove={workGlow.handlePointerMove}
-              >
-                <div className="accent-line" />
-                <div
-                  className="pointer-events-none absolute inset-0 opacity-80"
-                  style={{
-                    background: `radial-gradient(circle at ${workGlow.pointer.x}% ${workGlow.pointer.y}%, rgba(96,165,250,0.14), transparent 34%)`,
-                  }}
-                />
-                <div className="relative">
-                  <span className="section-label">Recent work</span>
-                  <motion.div
-                    initial={{ opacity: 0, y: 18 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.42, delay: 0.15 }}
-                    className="surface-card mt-3 p-3.5"
-                  >
-                    <div className="flex items-center justify-between gap-4">
-                      <h3 className="text-[15px] font-semibold text-white sm:text-base">{recentWork.title}</h3>
-                      <span className="text-[10px] uppercase tracking-[0.22em] text-slate-500 sm:text-xs">
-                        {recentWork.date}
-                      </span>
-                    </div>
-                    <p className="mt-2 text-sm text-cyan-200">{recentWork.subtitle}</p>
-                    <p className="mt-2.5 text-sm leading-6 text-slate-300">{recentWork.gist}</p>
-                  </motion.div>
-                </div>
+                className="pointer-events-none absolute inset-0 opacity-70"
+                style={{
+                  background: `radial-gradient(circle at ${interestGlow.pointer.x}% ${interestGlow.pointer.y}%, rgba(242,242,242,0.04), transparent 40%)`,
+                }}
+              />
+              <div className="relative flex items-baseline justify-between gap-3">
+                <p className="section-label">Recent interests</p>
+                <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
+                  {recentInterest.date}
+                </span>
               </div>
-
-              <div
-                className="surface-panel relative overflow-hidden p-4"
-                onPointerMove={interestGlow.handlePointerMove}
-              >
-                <div className="accent-line" />
-                <div
-                  className="pointer-events-none absolute inset-0 opacity-80"
-                  style={{
-                    background: `radial-gradient(circle at ${interestGlow.pointer.x}% ${interestGlow.pointer.y}%, rgba(116,255,212,0.14), transparent 34%)`,
-                  }}
-                />
-                <div className="relative">
-                  <span className="section-label">Recent interests</span>
-                  <motion.div
-                    initial={{ opacity: 0, x: 16 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.35, delay: 0.22 }}
-                    className="surface-card mt-3 p-3.5"
-                  >
-                    <div className="flex items-center justify-between gap-4">
-                      <h3 className="text-[15px] font-semibold text-white sm:text-base">{recentInterest.title}</h3>
-                      <span className="text-[10px] uppercase tracking-[0.22em] text-slate-500 sm:text-xs">
-                        {recentInterest.date}
-                      </span>
-                    </div>
-                    <p className="mt-2 text-sm text-cyan-200">{recentInterest.subtitle}</p>
-                    <p className="mt-2.5 text-sm leading-6 text-slate-300">{recentInterest.gist}</p>
-                  </motion.div>
-                </div>
-              </div>
+              <h2 className="relative mt-4 text-lg text-foreground">{recentInterest.title}</h2>
+              <p className="relative mt-1 font-mono text-xs text-muted-foreground">{recentInterest.subtitle}</p>
+              <ul className="relative mt-4 space-y-3 text-sm leading-6 text-muted-foreground">
+                {recentInterest.points.map((point) => (
+                  <li key={point} className="border-l border-border pl-3">
+                    {point}
+                  </li>
+                ))}
+              </ul>
             </div>
-          </motion.div>
-        </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   )
 }
 
 export default Hero
-

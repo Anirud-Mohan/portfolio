@@ -5,12 +5,12 @@ import SectionHeading from './SectionHeading'
 
 const Experience = () => {
   return (
-    <section id="experience" className="section-shell relative z-0">
-      <div className="page-shell relative z-10">
+    <section id="experience" className="section-shell">
+      <div className="page-shell">
         <SectionHeading
           eyebrow="Experience"
-          title="A more cinematic look at the work."
-          description="Selected roles, outcomes, and technologies presented as a cleaner futuristic timeline."
+          title="Selected roles and outcomes."
+          description="A stark look at the work — responsibilities, impact, and tools."
         />
         <InteractiveTimelineExperience />
       </div>
@@ -19,4 +19,3 @@ const Experience = () => {
 }
 
 export default Experience
-

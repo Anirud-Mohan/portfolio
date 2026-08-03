@@ -24,29 +24,27 @@ module.exports = {
         secondary: 'rgb(var(--secondary) / <alpha-value>)',
         'secondary-foreground': 'rgb(var(--secondary-foreground) / <alpha-value>)',
       },
+      fontFamily: {
+        sans: ['var(--font-sans)', 'system-ui', 'sans-serif'],
+        mono: ['var(--font-mono)', 'ui-monospace', 'monospace'],
+      },
       boxShadow: {
-        glow: '0 0 0 1px rgba(116, 255, 212, 0.18), 0 22px 80px rgba(6, 190, 165, 0.16)',
-        panel: '0 18px 70px rgba(2, 8, 23, 0.45)',
+        glow: 'none',
+        panel: 'none',
       },
       backgroundImage: {
         'hero-grid':
-          'linear-gradient(rgba(148, 163, 184, 0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(148, 163, 184, 0.08) 1px, transparent 1px)',
-        'panel-radial':
-          'radial-gradient(circle at top, rgba(116, 255, 212, 0.12), transparent 55%)',
+          'linear-gradient(rgba(34, 34, 34, 0.6) 1px, transparent 1px), linear-gradient(90deg, rgba(34, 34, 34, 0.6) 1px, transparent 1px)',
+        'panel-radial': 'none',
       },
       keyframes: {
         marquee: {
           '0%': { transform: 'translateX(0)' },
           '100%': { transform: 'translateX(-50%)' },
         },
-        float: {
-          '0%, 100%': { transform: 'translateY(0px)' },
-          '50%': { transform: 'translateY(-12px)' },
-        },
       },
       animation: {
-        marquee: 'marquee 28s linear infinite',
-        float: 'float 6s ease-in-out infinite',
+        marquee: 'marquee 55s linear infinite',
       },
     },
   },

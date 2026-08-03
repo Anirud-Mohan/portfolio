@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { motion } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
 import { usePathname } from 'next/navigation'
 
@@ -17,7 +16,6 @@ const homeSections = [
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [activeSection, setActiveSection] = useState('hero')
-  const [isScrolled, setIsScrolled] = useState(false)
   const pathname = usePathname()
   const isHome = pathname === '/'
 
@@ -26,11 +24,11 @@ const Header = () => {
 
     const handleScroll = () => {
       const sections = ['hero', ...homeSections.map((section) => section.id)]
-      const currentSection = sections.find(section => {
+      const currentSection = sections.find((section) => {
         const element = document.getElementById(section)
         if (element) {
           const rect = element.getBoundingClientRect()
-          return rect.top <= 180 && rect.bottom >= 180
+          return rect.top <= 120 && rect.bottom >= 120
         }
         return false
       })
@@ -41,71 +39,42 @@ const Header = () => {
 
     window.addEventListener('scroll', handleScroll)
     handleScroll()
-
     return () => window.removeEventListener('scroll', handleScroll)
   }, [isHome])
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 24)
-    }
-
-    window.addEventListener('scroll', handleScroll)
-    handleScroll()
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
-
   const scrollToSection = (sectionId: string) => {
     if (!isHome) return
-
     const element = document.getElementById(sectionId)
     if (element) {
-      const offset = 96
+      const offset = 72
       const top = element.getBoundingClientRect().top + window.scrollY - offset
       window.scrollTo({ top, behavior: 'smooth' })
     }
     setIsOpen(false)
   }
 
-  const navItems = [
-    ...homeSections.map((item) => ({
-      ...item,
-      href: `/#${item.id}`,
-    })),
-  ]
+  const navItems = homeSections.map((item) => ({
+    ...item,
+    href: `/#${item.id}`,
+  }))
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 px-4 py-4 sm:px-6 lg:px-8">
-      <div
-        className={`mx-auto flex max-w-7xl items-center justify-between rounded-full border px-4 py-3 transition-all duration-300 sm:px-6 ${
-          isScrolled
-            ? 'border-white/10 bg-slate-950/70 shadow-glow backdrop-blur-xl'
-            : 'border-white/5 bg-slate-950/35 backdrop-blur-md'
-        }`}
-      >
-        <div className="flex items-center gap-6">
-          <Link href="/" className="flex items-center gap-3">
-            <span className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-cyan-300/20 bg-cyan-300/10 text-sm font-semibold text-cyan-100">
-              AM
-            </span>
-            <div>
-              <p className="text-sm font-semibold tracking-[0.28em] text-white">ANIRUD MOHAN</p>
-              <p className="text-xs text-slate-400">ML Engineer · Data Science</p>
-            </div>
-          </Link>
-        </div>
+    <header className="fixed inset-x-0 top-0 z-50 border-b border-border bg-background">
+      <div className="page-shell flex h-16 items-center justify-between">
+        <Link href="/" className="group flex flex-col">
+          <span className="text-sm font-medium tracking-[0.2em] text-foreground">ANIRUD MOHAN</span>
+          <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
+            ML Engineer
+          </span>
+        </Link>
 
-        <nav className="hidden items-center gap-2 md:flex">
+        <nav className="hidden items-center gap-8 md:flex">
           {navItems.map((item) =>
             !isHome ? (
               <Link
                 key={item.id}
                 href={item.href}
-                className={`rounded-full px-4 py-2 text-sm ${
-                  pathname === item.href
-                    ? 'bg-white/10 text-white'
-                    : 'text-slate-300 hover:bg-white/5 hover:text-white'
-                }`}
+                className="font-mono text-xs uppercase tracking-[0.18em] text-muted-foreground transition hover:text-foreground"
               >
                 {item.label}
               </Link>
@@ -113,13 +82,14 @@ const Header = () => {
               <button
                 key={item.id}
                 onClick={() => scrollToSection(item.id)}
-                className={`rounded-full px-4 py-2 text-sm transition ${
-                  activeSection === item.id
-                    ? 'bg-white/10 text-white'
-                    : 'text-slate-300 hover:bg-white/5 hover:text-white'
+                className={`relative pb-1 font-mono text-xs uppercase tracking-[0.18em] transition ${
+                  activeSection === item.id ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'
                 }`}
               >
                 {item.label}
+                {activeSection === item.id ? (
+                  <span className="absolute inset-x-0 -bottom-px h-px bg-foreground" />
+                ) : null}
               </button>
             ),
           )}
@@ -127,33 +97,24 @@ const Header = () => {
 
         <button
           type="button"
-          className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-200 md:hidden"
+          className="inline-flex h-10 w-10 items-center justify-center border border-border text-foreground md:hidden"
           onClick={() => setIsOpen((open) => !open)}
+          aria-label="Toggle menu"
         >
-          <span className="sr-only">Toggle menu</span>
-          {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          {isOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
         </button>
       </div>
 
-      <motion.div
-        initial={false}
-        animate={{
-          opacity: isOpen ? 1 : 0,
-          y: isOpen ? 0 : -12,
-          pointerEvents: isOpen ? 'auto' : 'none',
-        }}
-        transition={{ duration: 0.2 }}
-        className="mx-auto mt-3 max-w-7xl md:hidden"
-      >
-        <div className="surface-panel overflow-hidden p-3">
-          <div className="grid gap-2">
+      {isOpen ? (
+        <div className="border-t border-border bg-background md:hidden">
+          <div className="page-shell flex flex-col gap-1 py-3">
             {navItems.map((item) =>
               !isHome ? (
                 <Link
                   key={item.id}
                   href={item.href}
                   onClick={() => setIsOpen(false)}
-                  className="rounded-2xl px-4 py-3 text-sm text-slate-200 hover:bg-white/5"
+                  className="px-1 py-3 font-mono text-xs uppercase tracking-[0.18em] text-muted-foreground"
                 >
                   {item.label}
                 </Link>
@@ -161,7 +122,7 @@ const Header = () => {
                 <button
                   key={item.id}
                   onClick={() => scrollToSection(item.id)}
-                  className="rounded-2xl px-4 py-3 text-left text-sm text-slate-200 hover:bg-white/5"
+                  className="px-1 py-3 text-left font-mono text-xs uppercase tracking-[0.18em] text-muted-foreground"
                 >
                   {item.label}
                 </button>
@@ -169,10 +130,9 @@ const Header = () => {
             )}
           </div>
         </div>
-      </motion.div>
+      ) : null}
     </header>
   )
 }
 
 export default Header
-

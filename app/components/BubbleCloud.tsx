@@ -116,7 +116,7 @@ function Bubble({
     >
       <div
         className={cn(
-          'relative flex rounded-full flex-col items-center justify-center text-center p-3 backdrop-blur-md transition-all duration-300 group-hover:scale-[1.02]',
+          'relative flex rounded-full flex-col items-center justify-center text-center p-3 bg-card transition-all duration-300 group-hover:scale-[1.02]',
           compact
             ? 'h-24 w-24 sm:h-28 sm:w-28 md:h-32 md:w-32'
             : 'h-32 w-32 sm:h-36 sm:w-36 md:h-40 md:w-40',

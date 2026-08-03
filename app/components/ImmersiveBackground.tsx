@@ -56,14 +56,10 @@ const ImmersiveBackground = () => {
     nodesRef.current = createNodes(canvas.width, canvas.height)
 
     const animate = (timestamp: number) => {
-      const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height)
-      gradient.addColorStop(0, 'rgba(4, 10, 24, 0.94)')
-      gradient.addColorStop(0.55, 'rgba(5, 11, 26, 0.9)')
-      gradient.addColorStop(1, 'rgba(2, 6, 23, 0.96)')
-      ctx.fillStyle = gradient
+      ctx.fillStyle = 'rgb(6, 10, 20)'
       ctx.fillRect(0, 0, canvas.width, canvas.height)
 
-      ctx.fillStyle = 'rgba(15, 23, 42, 0.25)'
+      ctx.fillStyle = 'rgba(13, 21, 38, 0.45)'
       ctx.fillRect(0, 0, canvas.width, canvas.height)
 
       const mouse = mouseRef.current
@@ -92,7 +88,7 @@ const ImmersiveBackground = () => {
 
         ctx.beginPath()
         ctx.arc(drawX, drawY, node.radius + mouseInfluence * 1.4, 0, Math.PI * 2)
-        ctx.fillStyle = `rgba(191, 245, 255, ${0.35 + pulse * 0.25 + mouseInfluence * 0.3})`
+        ctx.fillStyle = `rgba(148, 163, 184, ${0.14 + pulse * 0.08 + mouseInfluence * 0.12})`
         ctx.fill()
 
         nodesRef.current.forEach((otherNode) => {
@@ -101,11 +97,11 @@ const ImmersiveBackground = () => {
           const otherDrawY = (otherNode.baseY - scrollShift + canvas.height) % canvas.height
           const distance = Math.hypot(otherDrawX - drawX, otherDrawY - drawY)
 
-          if (distance < 120) {
+          if (distance < 110) {
             ctx.beginPath()
             ctx.moveTo(drawX, drawY)
             ctx.lineTo(otherDrawX, otherDrawY)
-            ctx.strokeStyle = `rgba(96, 165, 250, ${0.05 * (1 - distance / 120)})`
+            ctx.strokeStyle = `rgba(71, 85, 105, ${0.04 * (1 - distance / 110)})`
             ctx.lineWidth = 1
             ctx.stroke()
           }
@@ -113,13 +109,13 @@ const ImmersiveBackground = () => {
       })
 
       if (mouse.active) {
-        const glow = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, 220)
-        glow.addColorStop(0, 'rgba(116, 255, 212, 0.14)')
-        glow.addColorStop(0.5, 'rgba(96, 165, 250, 0.08)')
+        const glow = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, 160)
+        glow.addColorStop(0, 'rgba(94, 234, 212, 0.05)')
+        glow.addColorStop(0.5, 'rgba(71, 85, 105, 0.04)')
         glow.addColorStop(1, 'rgba(0, 0, 0, 0)')
         ctx.fillStyle = glow
         ctx.beginPath()
-        ctx.arc(mouse.x, mouse.y, 220, 0, Math.PI * 2)
+        ctx.arc(mouse.x, mouse.y, 160, 0, Math.PI * 2)
         ctx.fill()
       }
 

@@ -55,13 +55,13 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ title, description, image, te
       <div
         className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
         style={{
-          background: `radial-gradient(circle at ${pointer.x}% ${pointer.y}%, rgba(116,255,212,0.18), transparent 32%)`,
+          background: `radial-gradient(circle at ${pointer.x}% ${pointer.y}%, rgba(94,234,212,0.05), transparent 28%)`,
         }}
       />
 
       <div className="accent-line" />
       <div className="relative h-56 w-full overflow-hidden">
-        <div className="absolute inset-0 z-10 bg-gradient-to-t from-slate-950/85 via-slate-950/10 to-transparent transition-opacity duration-300 group-hover:from-slate-950/55" />
+        <div className="absolute inset-0 z-10 bg-gradient-to-t from-card via-transparent to-transparent transition-opacity duration-300 group-hover:from-card/70" />
         <Image
           src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}${image}`}
           alt={title}
@@ -79,13 +79,13 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ title, description, image, te
           {tagPreview.map((tech) => (
             <span
               key={tech}
-              className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-xs text-cyan-200"
+              className="rounded-full border border-slate-700 bg-muted px-3 py-1 text-xs text-teal-200"
             >
               {tech}
             </span>
           ))}
           {technologies.length > 3 && (
-            <span className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-xs text-slate-400">
+            <span className="rounded-full border border-slate-700 bg-muted px-3 py-1 text-xs text-slate-400">
               +{technologies.length - 3} more
             </span>
           )}
