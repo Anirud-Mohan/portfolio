@@ -2,8 +2,9 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { Menu, X } from 'lucide-react'
+import { Menu, Moon, Sun, X } from 'lucide-react'
 import { usePathname } from 'next/navigation'
+import { useTheme } from './ThemeProvider'
 
 const homeSections = [
   { id: 'experience', label: 'Experience' },
@@ -18,6 +19,7 @@ const Header = () => {
   const [activeSection, setActiveSection] = useState('hero')
   const pathname = usePathname()
   const isHome = pathname === '/'
+  const { theme, toggleTheme } = useTheme()
 
   useEffect(() => {
     if (!isHome) return
@@ -60,49 +62,60 @@ const Header = () => {
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-border bg-background">
-      <div className="page-shell flex h-16 items-center justify-between">
+      <div className="page-shell flex h-16 items-center justify-between gap-4">
         <Link href="/" className="group flex flex-col">
           <span className="text-sm font-medium tracking-[0.2em] text-foreground">ANIRUD MOHAN</span>
           <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
-            ML Engineer
+            AI Engineer
           </span>
         </Link>
 
-        <nav className="hidden items-center gap-8 md:flex">
-          {navItems.map((item) =>
-            !isHome ? (
-              <Link
-                key={item.id}
-                href={item.href}
-                className="font-mono text-xs uppercase tracking-[0.18em] text-muted-foreground transition hover:text-foreground"
-              >
-                {item.label}
-              </Link>
-            ) : (
-              <button
-                key={item.id}
-                onClick={() => scrollToSection(item.id)}
-                className={`relative pb-1 font-mono text-xs uppercase tracking-[0.18em] transition ${
-                  activeSection === item.id ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'
-                }`}
-              >
-                {item.label}
-                {activeSection === item.id ? (
-                  <span className="absolute inset-x-0 -bottom-px h-px bg-foreground" />
-                ) : null}
-              </button>
-            ),
-          )}
-        </nav>
+        <div className="flex items-center gap-3">
+          <nav className="hidden items-center gap-8 md:flex">
+            {navItems.map((item) =>
+              !isHome ? (
+                <Link
+                  key={item.id}
+                  href={item.href}
+                  className="font-mono text-xs uppercase tracking-[0.18em] text-muted-foreground transition hover:text-foreground"
+                >
+                  {item.label}
+                </Link>
+              ) : (
+                <button
+                  key={item.id}
+                  onClick={() => scrollToSection(item.id)}
+                  className={`relative pb-1 font-mono text-xs uppercase tracking-[0.18em] transition ${
+                    activeSection === item.id ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'
+                  }`}
+                >
+                  {item.label}
+                  {activeSection === item.id ? (
+                    <span className="absolute inset-x-0 -bottom-px h-px bg-foreground" />
+                  ) : null}
+                </button>
+              ),
+            )}
+          </nav>
 
-        <button
-          type="button"
-          className="inline-flex h-10 w-10 items-center justify-center border border-border text-foreground md:hidden"
-          onClick={() => setIsOpen((open) => !open)}
-          aria-label="Toggle menu"
-        >
-          {isOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
-        </button>
+          <button
+            type="button"
+            onClick={toggleTheme}
+            className="inline-flex h-10 w-10 items-center justify-center border border-border text-foreground transition hover:bg-muted"
+            aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+          >
+            {theme === 'dark' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+          </button>
+
+          <button
+            type="button"
+            className="inline-flex h-10 w-10 items-center justify-center border border-border text-foreground md:hidden"
+            onClick={() => setIsOpen((open) => !open)}
+            aria-label="Toggle menu"
+          >
+            {isOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
+          </button>
+        </div>
       </div>
 
       {isOpen ? (

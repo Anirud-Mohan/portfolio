@@ -40,7 +40,7 @@ export default function PointerAura() {
         y: springY,
         opacity: visible ? 1 : 0,
         background:
-          'radial-gradient(circle, rgba(242,242,242,0.08) 0%, rgba(242,242,242,0.03) 35%, transparent 70%)',
+          'radial-gradient(circle, rgba(var(--pointer-glow),0.08) 0%, rgba(var(--pointer-glow),0.03) 35%, transparent 70%)',
         transition: 'opacity 0.35s ease',
       }}
     />

@@ -13,47 +13,51 @@ const Hero = () => {
   const interestGlow = usePointerGlow()
 
   const recentWork = {
-    title: 'Brain MRI Diffusion',
-    subtitle: 'Pathology-controllable generation',
-    date: '2024 — Present',
+    title: "Master's graduation",
+    subtitle: 'University of Maryland, College Park',
+    date: '2026',
     points: [
-      'Diffusion models that generate healthy counterfactual brain MRI while preserving anatomy.',
-      'Paired scans that make pathological change easier to study.',
+      "Graduated with an M.S. in Applied Machine Learning from UMD with a 3.8 GPA.",
+      'Continuing research on LLM inference.',
     ],
   }
 
-  const recentInterest = {
-    title: 'Currently reading',
-    subtitle: 'Papers and technical writing',
-    date: 'Ongoing',
-    points: [
-      'Retrieval systems, generative AI, and ML engineering.',
-      'Space kept open for papers, posts, and topics in progress.',
-    ],
-  }
+  const readingLinks = [
+    {
+      label: 'Nvidia – The Inference Kingdom Expands',
+      href: 'https://newsletter.semianalysis.com/p/nvidia-the-inference-kingdom-expands',
+    },
+    {
+      label: 'Inside TPU and GPU Clusters: Collective Operations',
+      href: 'https://www.aleksagordic.com/blog/collective-operations',
+    },
+  ]
 
   const resumeHref = `${process.env.NEXT_PUBLIC_BASE_PATH || ''}/resume.pdf`
 
   return (
     <section id="hero" className="relative min-h-[calc(100vh-4rem)] border-b border-border">
-      <div className="page-shell grid min-h-[calc(100vh-4rem)] lg:grid-cols-[0.9fr_1.1fr]">
+      <div className="page-shell grid min-h-[calc(100vh-4rem)] lg:grid-cols-[0.72fr_1.28fr]">
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.7 }}
           className="relative flex flex-col justify-between border-b border-border py-10 lg:border-b-0 lg:border-r lg:py-14 lg:pr-10"
         >
-          <div className="relative aspect-[4/5] w-full max-w-md overflow-hidden border border-border bg-muted sm:max-w-sm lg:max-w-none">
+          <div className="portrait-soft relative mx-auto aspect-[4/5] w-full max-w-[280px] sm:max-w-[300px] lg:mx-0 lg:max-w-[320px]">
             {showPortrait ? (
-                  <Image
-                    src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}/ani.jpg`}
-                    alt="Anirud Mohan"
-                    fill
-                    priority
-                    sizes="(max-width: 1024px) 90vw, 40vw"
-                    className="object-cover object-[58%_28%]"
-                    onError={() => setShowPortrait(false)}
-                  />
+              <>
+                <Image
+                  src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}/ani.jpg`}
+                  alt="Anirud Mohan"
+                  fill
+                  priority
+                  sizes="320px"
+                  className="object-cover object-[58%_28%] saturate-[0.88] contrast-[1.04] brightness-[0.96]"
+                  onError={() => setShowPortrait(false)}
+                />
+                <div className="portrait-tone pointer-events-none absolute inset-0" />
+              </>
             ) : (
               <div className="flex h-full items-center justify-center font-mono text-4xl tracking-[0.4em] text-muted-foreground">
                 AM
@@ -76,7 +80,7 @@ const Hero = () => {
               transition={{ duration: 0.5, delay: 0.18 }}
               className="mt-3 font-mono text-xs uppercase tracking-[0.22em] text-muted-foreground"
             >
-              Machine Learning Engineer · Data Science · Software
+              AI Engineer · Machine Learning Engineer · Software Engineer
             </motion.p>
             <motion.a
               initial={{ opacity: 0, y: 10 }}
@@ -103,7 +107,7 @@ const Hero = () => {
           <div
             className="pointer-events-none absolute inset-0 opacity-80"
             style={{
-              background: `radial-gradient(circle at ${aboutGlow.pointer.x}% ${aboutGlow.pointer.y}%, rgba(242,242,242,0.05), transparent 36%)`,
+              background: `radial-gradient(circle at ${aboutGlow.pointer.x}% ${aboutGlow.pointer.y}%, rgba(var(--pointer-glow),0.05), transparent 36%)`,
             }}
           />
           <div className="relative">
@@ -122,7 +126,7 @@ const Hero = () => {
               <div
                 className="pointer-events-none absolute inset-0 opacity-70"
                 style={{
-                  background: `radial-gradient(circle at ${workGlow.pointer.x}% ${workGlow.pointer.y}%, rgba(242,242,242,0.04), transparent 40%)`,
+                  background: `radial-gradient(circle at ${workGlow.pointer.x}% ${workGlow.pointer.y}%, rgba(var(--pointer-glow),0.04), transparent 40%)`,
                 }}
               />
               <div className="relative flex items-baseline justify-between gap-3">
@@ -146,21 +150,34 @@ const Hero = () => {
               <div
                 className="pointer-events-none absolute inset-0 opacity-70"
                 style={{
-                  background: `radial-gradient(circle at ${interestGlow.pointer.x}% ${interestGlow.pointer.y}%, rgba(242,242,242,0.04), transparent 40%)`,
+                  background: `radial-gradient(circle at ${interestGlow.pointer.x}% ${interestGlow.pointer.y}%, rgba(var(--pointer-glow),0.04), transparent 40%)`,
                 }}
               />
               <div className="relative flex items-baseline justify-between gap-3">
                 <p className="section-label">Recent interests</p>
                 <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
-                  {recentInterest.date}
+                  Ongoing
                 </span>
               </div>
-              <h2 className="relative mt-4 text-lg text-foreground">{recentInterest.title}</h2>
-              <p className="relative mt-1 font-mono text-xs text-muted-foreground">{recentInterest.subtitle}</p>
-              <ul className="relative mt-4 space-y-3 text-sm leading-6 text-muted-foreground">
-                {recentInterest.points.map((point) => (
-                  <li key={point} className="border-l border-border pl-3">
-                    {point}
+              <h2 className="relative mt-4 text-lg text-foreground">Currently reading</h2>
+              <p className="relative mt-1 font-mono text-xs text-muted-foreground">
+                Diving deeper into LLM inference
+              </p>
+              <p className="relative mt-4 text-sm leading-6 text-muted-foreground">
+                Exploring inference systems, cluster communication, and how modern serving stacks scale.
+              </p>
+              <ul className="relative mt-4 space-y-3">
+                {readingLinks.map((link) => (
+                  <li key={link.href} className="border-l border-border pl-3">
+                    <a
+                      href={link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-start gap-1.5 text-sm leading-6 text-foreground underline-offset-4 transition hover:underline"
+                    >
+                      <span>{link.label}</span>
+                      <ArrowUpRight className="mt-1 h-3.5 w-3.5 shrink-0 text-muted-foreground" />
+                    </a>
                   </li>
                 ))}
               </ul>

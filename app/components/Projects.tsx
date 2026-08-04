@@ -95,7 +95,7 @@ function ProjectRow({
       <div
         className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
         style={{
-          background: `radial-gradient(circle at ${glow.pointer.x}% ${glow.pointer.y}%, rgba(242,242,242,0.05), transparent 42%)`,
+          background: `radial-gradient(circle at ${glow.pointer.x}% ${glow.pointer.y}%, rgba(var(--pointer-glow),0.05), transparent 42%)`,
         }}
       />
 
@@ -149,8 +149,8 @@ const Projects = () => {
       <div className="page-shell">
         <SectionHeading
           eyebrow="Projects"
-          title="Selected builds."
-          description="AI, optimization, and data systems — presented as compact work rows."
+          title="Selected builds that I'm proud of"
+          description="LLM inference, Model Serving, Optimization, and systems engineering projects."
         />
         <div className="border-b border-border">
           {projects.map((project, index) => (

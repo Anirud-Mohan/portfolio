@@ -28,7 +28,7 @@ const Contact = () => {
           <div
             className="pointer-events-none absolute inset-0 opacity-80"
             style={{
-              background: `radial-gradient(circle at ${glow.pointer.x}% ${glow.pointer.y}%, rgba(242,242,242,0.06), transparent 34%)`,
+              background: `radial-gradient(circle at ${glow.pointer.x}% ${glow.pointer.y}%, rgba(var(--pointer-glow),0.06), transparent 34%)`,
             }}
           />
           <a

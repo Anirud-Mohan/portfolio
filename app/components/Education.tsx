@@ -11,7 +11,7 @@ const educationData = [
   {
     institution: "University of Maryland, College Park",
     degree: "Master of Science in Applied Machine Learning",
-    period: "2024 — present",
+    period: "2024 — 2026",
     logo: "/umd-logo.jpeg",
     fallbackLabel: "UMD",
     details: {
@@ -23,7 +23,7 @@ const educationData = [
         "Probability and Statistics",
       ],
       achievements: [
-        "3.76 GPA",
+        "3.8 GPA",
         "Member of UMD Soccer Club",
         "Working as Terp Host for the UMD Athletics Department",
       ],

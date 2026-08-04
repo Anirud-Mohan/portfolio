@@ -146,8 +146,8 @@ const InteractiveTimelineExperience = () => {
               <div className="max-w-2xl">
                 <p className="font-mono text-xs uppercase tracking-[0.22em] text-muted-foreground">{exp.date}</p>
                 <h3 className="mt-3 text-3xl font-medium tracking-tight text-foreground sm:text-4xl">{exp.company}</h3>
-                <p className="mt-2 text-lg text-muted-foreground">{exp.position}</p>
-                <p className="mt-5 text-base leading-7 text-muted-foreground">{exp.summary}</p>
+                <p className="mt-2 text-lg text-foreground/90">{exp.position}</p>
+                <p className="mt-5 text-base leading-7 text-foreground/85">{exp.summary}</p>
                 <button
                   onClick={() => setSelectedExperience(exp)}
                   className="mt-6 inline-flex items-center font-mono text-xs uppercase tracking-[0.18em] text-foreground transition hover:text-muted-foreground"
@@ -204,7 +204,7 @@ const InteractiveTimelineExperience = () => {
                     <div>
                       <p className="section-label">Experience detail</p>
                       <h2 className="mt-4 text-3xl font-medium text-foreground">{selectedExperience.company}</h2>
-                      <p className="mt-2 text-lg text-muted-foreground">{selectedExperience.position}</p>
+                      <p className="mt-2 text-lg text-foreground/90">{selectedExperience.position}</p>
                       <p className="mt-2 font-mono text-xs uppercase tracking-[0.18em] text-muted-foreground">
                         {selectedExperience.date}
                       </p>
@@ -237,7 +237,7 @@ const InteractiveTimelineExperience = () => {
                   <h4 className="mt-10 section-label">Responsibilities</h4>
                   <ul className="mt-4 space-y-3">
                     {selectedExperience.details.map((detail, index) => (
-                      <li key={index} className="border border-border px-5 py-4 text-sm leading-7 text-muted-foreground">
+                      <li key={index} className="border border-border bg-muted/40 px-5 py-4 text-sm leading-7 text-foreground">
                         {detail}
                       </li>
                     ))}
