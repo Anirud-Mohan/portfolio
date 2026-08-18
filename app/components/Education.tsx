@@ -70,7 +70,7 @@ function InstitutionLogo({
 
   return (
     <Image
-      src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}${src || "/placeholder.svg"}`}
+      src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}${src}`}
       alt={alt}
       width={size}
       height={size}

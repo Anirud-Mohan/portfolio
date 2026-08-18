@@ -47,7 +47,7 @@ const certifications: Certification[] = [
     title: "Big Data Analytics",
     issuer: "Unschool",
     date: "March 2021",
-    credentialUrl: "/certifications/Unschool_BD_cert.pdf",
+    credentialUrl: "/certifications/Unschool_BD_Cert.pdf",
     logo: "/unschool.png",
   },
   {
